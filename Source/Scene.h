@@ -28,14 +28,15 @@ class Scene{// : public GUObject {
 	CGDClock								*mainClock;
 	LookAtCamera							*mainCamera;
 
-	CBufferScene* cBufferSceneCPU = nullptr;
+	CBufferScene *cBufferSceneCPU = nullptr;
 	ID3D11Buffer *cBufferSceneGPU = nullptr;
-	CBufferLight* cBufferLightCPU = nullptr;
+	CBufferLight *cBufferLightCPU = nullptr;
 	ID3D11Buffer *cBufferLightGPU = nullptr;
 
 	// Add Textures to the scene
-	Texture* cubeDayTexture = nullptr;
-	Texture* brickTexture = nullptr;
+	Texture *cubeDayTexture = nullptr;
+	Texture *brickTexture = nullptr;
+	Texture *waterNormalTexture = nullptr;
 
 	// Add Effects to the scene
 	Effect *basicColourEffect =		nullptr;
@@ -43,6 +44,7 @@ class Scene{// : public GUObject {
 	Effect *perPixelLightingEffect = nullptr;
 	Effect *skyBoxEffect = nullptr;
 	Effect *reflectionMappingEffect = nullptr;
+	Effect *waterEffect = nullptr;
 
 	// Add objects to the scene
 	Triangle	*triangle = nullptr; //pointer to a Triangle the actual triangle is created in initialiseSceneResources

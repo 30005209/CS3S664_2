@@ -66,6 +66,7 @@ HRESULT Scene::initialiseSceneResources() {
 	
 	// Add Code Here ( Load reflection_map_vs.cso and reflection_map_ps.cso  )
 	reflectionMappingEffect = new Effect(device, "Shaders\\cso\\reflection_map_vs.cso", "Shaders\\cso\\reflection_map_ps.cso", extVertexDesc, ARRAYSIZE(extVertexDesc));
+	waterEffect = new Effect(device, "Shaders\\cso\\ocean_vs.cso", "Shaders\\cso\\ocean_ps.cso", extVertexDesc, ARRAYSIZE(extVertexDesc));
 
 	// The Effect class constructor sets default depth/stencil, rasteriser and blend states
 	// The Effect binds these states to the pipeline whenever an object using the effect is rendered
@@ -81,11 +82,16 @@ HRESULT Scene::initialiseSceneResources() {
 	// Setup Textures
 	// The Texture class is a helper class to load textures
 	cubeDayTexture = new Texture(device, L"Resources\\Textures\\grassenvmap1024.dds");
+	waterNormalTexture = new Texture(device, L"Resources\\Textures\\waves.dds");
+
+
 	brickTexture = new Texture(device, L"Resources\\Textures\\Brick_DIFFUSE.jpg");
 	// The BaseModel class supports multitexturing and the constructor takes a pointer to an array of shader resource views of textures. 
 	// Even if we only need 1 texture/shader resource view for an effect we still need to create an array.
 	ID3D11ShaderResourceView *skyBoxTextureArray[] = { cubeDayTexture->getShaderResourceView()};
+	ID3D11ShaderResourceView* waterTextureArray[] = { waterNormalTexture->getShaderResourceView(), cubeDayTexture->getShaderResourceView() };
 	ID3D11ShaderResourceView *brickTextureArray[] = { brickTexture->getShaderResourceView() };
+
 	// Setup Objects - the object below are derived from the Base model class
 	// The constructors for all objects derived from BaseModel require at least a valid pointer to the main DirectX device
 	// And a valid effect with a vertex shader input structure that matches the object vertex structure.
@@ -119,8 +125,8 @@ HRESULT Scene::initialiseSceneResources() {
 	orb2->setWorldMatrix(XMMatrixScaling(0.5, 0.5, 0.5)*XMMatrixTranslation(3, 0, 0));
 	orb2->update(context);
 
-	// Water init
-	water = new Grid(20, 20, device, perPixelLightingEffect, matWhiteArray, 1, brickTextureArray, 1);
+	// Water init - final int is number of textures
+	water = new Grid(20, 20, device, waterEffect, matWhiteArray, 1, waterTextureArray, 2);
 	water->update(context);
 		
 	// Setup a camera

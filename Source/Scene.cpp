@@ -112,18 +112,17 @@ HRESULT Scene::initialiseSceneResources() {
 	Material glossRed(XMCOLOR(1.0, 0.0, 0.0, 1.0));
 	Material*glossRedMaterialArray[]{ &glossRed };
 	Material matWhite;
-	matWhite.setSpecular(XMCOLOR(0.2f, 0.2f, 0.2f, 0.01f));
+	matWhite.setSpecular(XMCOLOR(0.2, 0.2, 0.2, 0.01));
 	Material*matWhiteArray[]{ &matWhite };
 
 	orb2 = new Model(device, wstring(L"Resources\\Models\\sphere.3ds"), perPixelLightingEffect,matWhiteArray, 1, brickTextureArray, 1);
 	orb2->setWorldMatrix(XMMatrixScaling(0.5, 0.5, 0.5)*XMMatrixTranslation(3, 0, 0));
 	orb2->update(context);
 
-	//Initialise water
-	water = new Grid(20, 20, device, perPixelLightingEffect, matWhiteArray, 1, brickTextureArray);
+	// Water init
+	water = new Grid(20, 20, device, perPixelLightingEffect, matWhiteArray, 1, brickTextureArray, 1);
 	water->update(context);
-
-	
+		
 	// Setup a camera
 	// The LookAtCamera is derived from the base Camera class. The constructor for the Camera class requires a valid pointer to the main DirectX device
 	// and and 3 vectors to define the initial position, up vector and target for the camera.
@@ -138,8 +137,8 @@ HRESULT Scene::initialiseSceneResources() {
 
 	// Fill out cBufferLightCPU
 	cBufferLightCPU->lightVec = XMFLOAT4(-5.0, 2.0, 5.0, 1.0);
-	cBufferLightCPU->lightAmbient = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);
-	cBufferLightCPU->lightDiffuse = XMFLOAT4(0.7f, 0.7f, 0.7f, 1.0f);
+	cBufferLightCPU->lightAmbient = XMFLOAT4(0.2, 0.2, 0.2, 1.0);
+	cBufferLightCPU->lightDiffuse = XMFLOAT4(0.7, 0.7, 0.7, 1.0);
 	cBufferLightCPU->lightSpecular = XMFLOAT4(1.0, 1.0, 1.0, 1.0);
 
 	// Create GPU resource memory copy of cBufferLight
@@ -184,21 +183,6 @@ HRESULT Scene::initialiseSceneResources() {
 	context->VSSetConstantBuffers(3, 1, &cBufferSceneGPU);// Attach CBufferSceneGPU to register b3 for the vertex shader. Not strictly needed as our vertex shader doesnt require access to this CBuffer
 	context->PSSetConstantBuffers(3, 1, &cBufferSceneGPU);// Attach CBufferSceneGPU to register b3 for the Pixel shader
 
-	// Texture Sampling of water
-	ID3D11SamplerState* normalMapSampler = nullptr;
-	D3D11_SAMPLER_DESC samplerDesc;
-	ZeroMemory(&samplerDesc, sizeof(D3D11_SAMPLER_DESC));
-	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
-	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
-	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
-	samplerDesc.MinLOD = 0.0f;
-	samplerDesc.MaxLOD = 0.0f;
-	samplerDesc.MipLODBias = 0.0f;
-	samplerDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
-	
-	hr = device->CreateSamplerState(&samplerDesc, &normalMapSampler);
-
 	return S_OK;
 }
 
@@ -214,10 +198,10 @@ HRESULT Scene::updateScene(ID3D11DeviceContext *context,Camera *camera) {
 	// If the CPU CBuffer contents are changed then the changes need to be copied to GPU CBuffer with the mapCbuffer helper function
 	mainCamera->update(context);
 
-	orb2->setWorldMatrix(orb2->getWorldMatrix()* XMMatrixRotationZ((float)dT));
+	orb2->setWorldMatrix(orb2->getWorldMatrix()* XMMatrixRotationZ(dT));
 	orb2->update(context);
 	// Update the scene time as it is needed to animate the water
-	cBufferSceneCPU->Time = (FLOAT)gT;
+	cBufferSceneCPU->Time = gT;
 	mapCbuffer(context, cBufferSceneCPU, cBufferSceneGPU, sizeof(CBufferScene));
 	
 	return S_OK;
@@ -250,7 +234,6 @@ HRESULT Scene::renderScene() {
 	if (orb2)
 		orb2->render(context);
 
-	// Water 
 	if (water)
 		water->render(context);
 

@@ -182,10 +182,10 @@
     <FxCompile Include="Shaders\hlsl\sky_box_vs.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
-    <FxCompile Include="Shaders\hlsl\ocean_vs.hlsl">
+    <FxCompile Include="Shaders\hlsl\ocean_ps.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
-    <FxCompile Include="Shaders\hlsl\ocean_ps.hlsl">
+    <FxCompile Include="Shaders\hlsl\ocean_vs.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
   </ItemGroup>

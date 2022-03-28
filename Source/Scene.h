@@ -51,6 +51,7 @@ class Scene{// : public GUObject {
 	Model		*orb2 = nullptr;
 	Grid		*water = nullptr;
 
+
 	// Private constructor
 	Scene(const LONG _width, const LONG _height, const wchar_t* wndClassName, const wchar_t* wndTitle, int nCmdShow, HINSTANCE hInstance, WNDPROC WndProc);
 	// Return TRUE if the window is in a minimised state, FALSE otherwise

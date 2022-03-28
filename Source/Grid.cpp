@@ -62,6 +62,22 @@ HRESULT  Grid::init(ID3D11Device *device, UINT widthl, UINT heightl)//, Effect *
 			throw exception("Vertex buffer cannot be created");
 
 
+		// Also creates sampler - from baseModel
+		D3D11_SAMPLER_DESC samplerDesc;
+		ZeroMemory(&samplerDesc, sizeof(D3D11_SAMPLER_DESC));
+		samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+		samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
+		samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+		samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+		samplerDesc.MinLOD = 0.0f;
+		samplerDesc.MaxLOD = 0.0f;
+		samplerDesc.MipLODBias = 0.0f;
+		samplerDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
+
+		device->CreateSamplerState(&samplerDesc, &cubeSampler);
+
+
+
 		for (int i = 0; i<height - 1; i++)
 		{
 			for (int j = 0; j<width - 1; j++)
@@ -142,8 +158,13 @@ void Grid::render(ID3D11DeviceContext *context) {
 	// Bind texture resource views and texture sampler objects to the PS stage of the pipeline
 	if (numTextures > 0 && sampler) {
 
+		//Standard sampler in slot 0
 		context->PSSetShaderResources(0, numTextures, textures);
 		context->PSSetSamplers(0, 1, &sampler);
+
+		//Should cubeSampler exist - set it to slot 1
+		if (cubeSampler)
+			context->PSSetSamplers(1, 1, &cubeSampler);
 	}
 
 	// Set vertex and index buffers for IA

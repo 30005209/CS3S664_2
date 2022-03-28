@@ -71,17 +71,12 @@ struct Wave {
 	float2				dir;
 };
 
-// Evaluate the sin wave at a point in time to work out
 float evaluateWave(Wave w, float2 pos, float t)
 {
-	// sin - value
-	// pos - position in grid
-	// wave.amp - wave amplitude (structure above)
 	return w.amp * sin(dot(w.dir, pos)*w.freq + t*w.phase);
 }
 
 // derivative of wave function
-// Calculate the tangent of the wave instead of its amplitude - used to work out the normal
 float evaluateWaveDeriv(Wave w, float2 pos, float t)
 {
 	return w.freq*w.amp * cos(dot(w.dir, pos)*w.freq + t*w.phase);
@@ -98,8 +93,8 @@ vertexOutputPacket main(vertexInputPacket IN) {
 	
 	///////// TWEAKABLE PARAMETERS //////////////////
 	float				BumpScale = 0.05;
-	float				TexReptX = 1;
-	float				TexReptY = 1;
+	float				TexReptX = 5;
+	float				TexReptY = 5;
 	float				BumpSpeedX = -0.005;
 	float				BumpSpeedY = 0.005;
 	float2				TextureScale = float2(TexReptX, TexReptY);
@@ -129,9 +124,9 @@ vertexOutputPacket main(vertexInputPacket IN) {
 	}
 
 	// compute tangent basis
-	float3 B = float3(1, ddx, 0);
-	float3 T = float3(0, ddy, 1);
-	float3 N = float3(-ddx, 1, -ddy);
+	float3 B = float3(1, ddx, 0);			//Binormal
+	float3 T = float3(0, ddy, 1);			//Tangent
+	float3 N = float3(-ddx, 1, -ddy);		//Normal
 
 	OUT.posH = mul(Po, WVP);
 

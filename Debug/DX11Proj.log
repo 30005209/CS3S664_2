@@ -1,8 +1,7 @@
-﻿  Grid.cpp
-D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Grid.cpp(29,20): warning C4018: '<': signed/unsigned mismatch
-D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Grid.cpp(31,21): warning C4018: '<': signed/unsigned mismatch
-D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Grid.cpp(34,37): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Grid.cpp(35,37): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Grid.cpp(82,20): warning C4018: '<': signed/unsigned mismatch
-D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Grid.cpp(84,21): warning C4018: '<': signed/unsigned mismatch
+﻿  Scene.cpp
+D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(122,50): warning C4305: 'argument': truncation from 'double' to 'float'
+D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(151,61): warning C4305: 'argument': truncation from 'double' to 'float'
+D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(152,61): warning C4305: 'argument': truncation from 'double' to 'float'
+D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(212,65): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(219,26): warning C4244: '=': conversion from 'double' to 'FLOAT', possible loss of data
   DX11Proj.vcxproj -> D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Debug\DX11Proj.exe

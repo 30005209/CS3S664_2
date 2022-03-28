@@ -37,6 +37,7 @@ class Scene{// : public GUObject {
 	Texture *cubeDayTexture = nullptr;
 	Texture *brickTexture = nullptr;
 	Texture *waterNormalTexture = nullptr;
+	Texture *sharkTexture = nullptr;
 
 	// Add Effects to the scene
 	Effect *basicColourEffect =		nullptr;
@@ -49,9 +50,10 @@ class Scene{// : public GUObject {
 	// Add objects to the scene
 	Triangle	*triangle = nullptr; //pointer to a Triangle the actual triangle is created in initialiseSceneResources
 	Box			*box = nullptr; 
+	Grid		*water = nullptr;
 	Model		*orb = nullptr;
 	Model		*orb2 = nullptr;
-	Grid		*water = nullptr;
+	Model		*shark = nullptr;
 
 
 	// Private constructor

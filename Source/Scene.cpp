@@ -82,15 +82,16 @@ HRESULT Scene::initialiseSceneResources() {
 	// Setup Textures
 	// The Texture class is a helper class to load textures
 	cubeDayTexture = new Texture(device, L"Resources\\Textures\\grassenvmap1024.dds");
-	waterNormalTexture = new Texture(device, L"Resources\\Textures\\waves.dds");
-
+	waterNormalTexture = new Texture(device, L"Resources\\Textures\\Waves.dds");
+	sharkTexture = new Texture(device, L"Resources\\Textures\\greatwhiteshark.png");
 
 	brickTexture = new Texture(device, L"Resources\\Textures\\Brick_DIFFUSE.jpg");
 	// The BaseModel class supports multitexturing and the constructor takes a pointer to an array of shader resource views of textures. 
 	// Even if we only need 1 texture/shader resource view for an effect we still need to create an array.
 	ID3D11ShaderResourceView *skyBoxTextureArray[] = { cubeDayTexture->getShaderResourceView()};
-	ID3D11ShaderResourceView* waterTextureArray[] = { waterNormalTexture->getShaderResourceView(), cubeDayTexture->getShaderResourceView() };
+	ID3D11ShaderResourceView* waterTextureArray[] = { waterNormalTexture->getShaderResourceView(), cubeDayTexture->getShaderResourceView()};
 	ID3D11ShaderResourceView *brickTextureArray[] = { brickTexture->getShaderResourceView() };
+	ID3D11ShaderResourceView* sharkTextureArray[] = { sharkTexture->getShaderResourceView() };
 
 	// Setup Objects - the object below are derived from the Base model class
 	// The constructors for all objects derived from BaseModel require at least a valid pointer to the main DirectX device
@@ -125,8 +126,13 @@ HRESULT Scene::initialiseSceneResources() {
 	orb2->setWorldMatrix(XMMatrixScaling(0.5, 0.5, 0.5)*XMMatrixTranslation(3, 0, 0));
 	orb2->update(context);
 
+	shark = new Model(device, wstring(L"Resources\\Models\\shark.obj"), perPixelLightingEffect, matWhiteArray, 1, sharkTextureArray, 1);
+	shark->setWorldMatrix(XMMatrixScaling(0.5, 0.5, 0.5) * XMMatrixTranslation(5, -1, 10));
+	shark->update(context);
+
 	// Water init - final int is number of textures
 	water = new Grid(20, 20, device, waterEffect, matWhiteArray, 1, waterTextureArray, 2);
+	water->setWorldMatrix(XMMatrixScaling(5, 5, 5) * XMMatrixTranslation(-10, 0, 0));
 	water->update(context);
 		
 	// Setup a camera
@@ -135,7 +141,6 @@ HRESULT Scene::initialiseSceneResources() {
 	// The camera class  manages a Cbuffer containing view/projection matrix properties. It has methods to update the cbuffers if the camera moves changes  
 	// The camera constructor and update methods also attaches the camera CBuffer to the pipeline at slot b1 for vertex and pixel shaders
 	mainCamera =  new LookAtCamera(device, XMVectorSet(0.0, 0.0, -10.0, 1.0f), XMVectorSet(0.0f, 1.0f, 0.0f, 1.0f), XMVectorZero());
-
 
 	// Add a CBuffer to store light properties - you might consider creating a Light Class to manage this CBuffer
 	// Allocate 16 byte aligned block of memory for "main memory" copy of cBufferLight
@@ -206,6 +211,10 @@ HRESULT Scene::updateScene(ID3D11DeviceContext *context,Camera *camera) {
 
 	orb2->setWorldMatrix(orb2->getWorldMatrix()* XMMatrixRotationZ(dT));
 	orb2->update(context);
+	
+	//shark->setWorldMatrix(shark->getWorldMatrix() * XMMatrixRotationZ(dT));
+	shark->update(context);
+
 	// Update the scene time as it is needed to animate the water
 	cBufferSceneCPU->Time = gT;
 	mapCbuffer(context, cBufferSceneCPU, cBufferSceneGPU, sizeof(CBufferScene));
@@ -234,11 +243,14 @@ HRESULT Scene::renderScene() {
 		box->render(context);
 
 	// Render orb
-	if (orb)
-		orb->render(context);
-	// Render orb2
-	if (orb2)
-		orb2->render(context);
+	//if (orb)
+	//	orb->render(context);
+	//// Render orb2
+	//if (orb2)
+	//	orb2->render(context);
+
+	if (shark)
+		shark->render(context);
 
 	if (water)
 		water->render(context);
@@ -444,6 +456,10 @@ Scene::~Scene() {
 		delete(orb);
 	if (orb2)
 		delete(orb2);
+
+	if (water)
+		delete(water);
+
 
 	if (mainClock)
 		delete(mainClock);

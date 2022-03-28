@@ -65,6 +65,7 @@ struct FragmentInputPacket {
 	float3				T2WXf2		: T2WMATRIX2;	// second row of the 3x3 transform from tangent to cube space
 	float3				T2WXf3		: T2WMATRIX3;	// third row of the 3x3 transform from tangent to cube space
 	// Normal map UV  coords
+	//Three used so that water bump is repeated and scaled so that repetition is blurred and harder to detect
 	float2				bumpUV0		: TEXCOORD1;	// Small ripples
 	float2				bumpUV1		: TEXCOORD2;	// Medium ripples
 	float2				bumpUV2		: TEXCOORD3;	// Large ripples
@@ -85,6 +86,8 @@ FragmentOutputPacket main(FragmentInputPacket IN) {
 
 	FragmentOutputPacket outputFragment;
 	
+	//As water reflects better at shallower distances (opposed to looking straight down where you just see colour)
+	//These values help adjust the blending
 	///////// TWEAKABLE PARAMETERS //////////////////
 	float FresnelBias =		0.3;
 	float FresnelExp =		4.0;

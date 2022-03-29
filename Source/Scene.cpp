@@ -138,11 +138,11 @@ HRESULT Scene::initialiseSceneResources() {
 	orb2->update(context);
 
 	shark = new Model(device, wstring(L"Resources\\Models\\shark.obj"), perPixelLightingEffect, matWhiteArray, 1, sharkTextureArray, 1);
-	shark->setWorldMatrix(XMMatrixScaling(0.5, 0.5, 0.5) * XMMatrixTranslation(5, -1, 10));
+	shark->setWorldMatrix(XMMatrixScaling(0.25, 0.25, 0.25) * XMMatrixTranslation(25, -0.75, 10));
 	shark->update(context);
 
 	castle = new Model(device, wstring(L"Resources\\Models\\castle.3DS"), perPixelLightingEffect, matWhiteArray, 1, castleTextureArray, 1);
-	castle->setWorldMatrix(XMMatrixScaling(4.0f, 4.0f, 4.0f) * XMMatrixTranslation(10, 0, 10));
+	castle->setWorldMatrix(XMMatrixScaling(10.0f, 10.0f, 10.0f) * XMMatrixTranslation(10, 0, 10));
 	castle->update(context);
 
 	// Water init - final int is number of textures
@@ -284,12 +284,12 @@ HRESULT Scene::renderScene() {
 	//if (orb2)
 	//	orb2->render(context);
 
-	//if (shark)
-	//	shark->render(context);
+	if (shark)
+		shark->render(context);
 
 	//if (water)
 	//	water->render(context);
-
+	
 	if (castle)
 		castle->render(context);
 

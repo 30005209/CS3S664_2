@@ -86,6 +86,7 @@ HRESULT Scene::initialiseSceneResources() {
 	cubeDayTexture = new Texture(device, L"Resources\\Textures\\grassenvmap1024.dds");
 	waterNormalTexture = new Texture(device, L"Resources\\Textures\\Waves.dds");
 	sharkTexture = new Texture(device, L"Resources\\Textures\\greatwhiteshark.png");
+	castleTexture = new Texture(device, L"Resources\\Textures\\castle.jpg");
 
 	// Foiliage / grass
 	grassAlphaTexture = new Texture(device, L"Resources\\Textures\\grassAlpha.tif");
@@ -101,6 +102,7 @@ HRESULT Scene::initialiseSceneResources() {
 	ID3D11ShaderResourceView* sharkTextureArray[] = { sharkTexture->getShaderResourceView() };
 	ID3D11ShaderResourceView* grassTextureArray[] = { grassDiffTexture->getShaderResourceView(), grassAlphaTexture->getShaderResourceView() };
 	ID3D11ShaderResourceView* treeTextureArray[] = { treeTexture->getShaderResourceView() };
+	ID3D11ShaderResourceView* castleTextureArray[] = { castleTexture->getShaderResourceView() };
 
 	// Setup Objects - the object below are derived from the Base model class
 	// The constructors for all objects derived from BaseModel require at least a valid pointer to the main DirectX device
@@ -138,6 +140,10 @@ HRESULT Scene::initialiseSceneResources() {
 	shark = new Model(device, wstring(L"Resources\\Models\\shark.obj"), perPixelLightingEffect, matWhiteArray, 1, sharkTextureArray, 1);
 	shark->setWorldMatrix(XMMatrixScaling(0.5, 0.5, 0.5) * XMMatrixTranslation(5, -1, 10));
 	shark->update(context);
+
+	castle = new Model(device, wstring(L"Resources\\Models\\castle.3DS"), perPixelLightingEffect, matWhiteArray, 1, castleTextureArray, 1);
+	castle->setWorldMatrix(XMMatrixScaling(4.0f, 4.0f, 4.0f) * XMMatrixTranslation(10, 0, 10));
+	castle->update(context);
 
 	// Water init - final int is number of textures
 	water = new Grid(20, 20, device, waterEffect, matWhiteArray, 1, waterTextureArray, 2);
@@ -282,6 +288,9 @@ HRESULT Scene::renderScene() {
 
 	//if (water)
 	//	water->render(context);
+
+	if (castle)
+		castle->render(context);
 
 	if (grass)
 	{
@@ -509,6 +518,16 @@ Scene::~Scene() {
 
 	if (grass)
 		delete(grass);
+
+	if(tree0)
+		delete(tree0);
+	if(tree1)
+		delete(tree1);
+	if (tree2)
+		delete(tree2);
+
+	if (castle)
+		delete(castle);
 
 	if (mainClock)
 		delete(mainClock);

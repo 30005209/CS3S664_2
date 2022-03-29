@@ -42,6 +42,8 @@ class Scene{// : public GUObject {
 	Texture *grassAlphaTexture = nullptr;
 	Texture *grassDiffTexture = nullptr;
 	Texture *treeTexture = nullptr;
+	Texture *castleTexture = nullptr;
+
 
 	// Add Effects to the scene
 	Effect *basicColourEffect =		nullptr;
@@ -58,6 +60,7 @@ class Scene{// : public GUObject {
 	Box			*box = nullptr; 
 	Grid		*water = nullptr;
 	Grid		*grass = nullptr;
+	Model		*castle = nullptr;
 	Model		*orb = nullptr;
 	Model		*orb2 = nullptr;
 	Model		*shark = nullptr;

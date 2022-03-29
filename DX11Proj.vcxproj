@@ -92,6 +92,7 @@
     <ClInclude Include="Source\CBufferStructures.h" />
     <ClInclude Include="Source\Effect.h" />
     <ClInclude Include="Source\CGDConsole.h" />
+    <ClInclude Include="Source\FirstPersonCamera.h" />
     <ClInclude Include="Source\Grid.h" />
     <ClInclude Include="Source\Model.h" />
     <ClInclude Include="Source\Scene.h" />
@@ -115,6 +116,7 @@
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\Effect.cpp" />
     <ClCompile Include="Source\CGDConsole.cpp" />
+    <ClCompile Include="Source\FirstPersonCamera.cpp" />
     <ClCompile Include="Source\Grid.cpp" />
     <ClCompile Include="Source\Model.cpp" />
     <ClCompile Include="Source\Scene.cpp" />

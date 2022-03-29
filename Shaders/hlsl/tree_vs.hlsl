@@ -65,7 +65,9 @@ vertexOutputPacket main(vertexInputPacket inputVertex) {
 	float3 pos = inputVertex.pos;
 
 	// Add Code Here (Animate Trees)
-
+	float k = pow(pos.y / 2, 3);
+	float3 gWindDir = float3(sin(Time) * 0.05, 0, 0);
+	pos = pos + gWindDir * k;
 
 	// Lighting is calculated in world space.
 	outputVertex.posW = mul(float4(pos, 1.0f), worldMatrix).xyz;
@@ -76,6 +78,7 @@ vertexOutputPacket main(vertexInputPacket inputVertex) {
 	outputVertex.matSpecular = inputVertex.matSpecular;
 	// .. and texture coordinates.
 	outputVertex.texCoord = inputVertex.texCoord;
+
 	// Finally transform/project pos to screen/clip space posH
 	outputVertex.posH = mul(float4(pos, 1.0), WVP);
 

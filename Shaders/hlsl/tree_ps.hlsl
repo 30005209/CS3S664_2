@@ -85,7 +85,7 @@ FragmentOutputPacket main(FragmentInputPacket v) {
 	baseColour =  myTexture.Sample(linearSampler, v.texCoord);
 	// Alpha Test
 	// Add Code Here (Clip for alpha < 0.9)
-	clip(baseColour.a < 0.9f ? -1 : 1);
+	//clip(baseColour.a < 0.9f ? -1 : 1);
 
 
 	//Initialise returned colour to ambient component

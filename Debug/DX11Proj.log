@@ -1,2 +1,7 @@
-﻿  Effect.cpp
+﻿D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Shaders\hlsl\tree_ps.hlsl(92,18-45): warning X3206: implicit truncation of vector type
+D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Shaders\hlsl\tree_ps.hlsl(100,12-69): warning X3206: implicit truncation of vector type
+D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Shaders\hlsl\tree_ps.hlsl(104,28-42): warning X3206: implicit truncation of vector type
+D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Shaders\hlsl\tree_ps.hlsl(107,12-57): warning X3206: implicit truncation of vector type
+  
+  compilation object save succeeded; see D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Shaders\cso\tree_ps.cso
   DX11Proj.vcxproj -> D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Debug\DX11Proj.exe

@@ -148,15 +148,15 @@ HRESULT Scene::initialiseSceneResources() {
 	grass->setWorldMatrix(XMMatrixScaling(5, 5, 5) * XMMatrixTranslation(-10, 0, 0));
 	grass->update(context);
 
-	tree0 = new Model(device, wstring(L"Resources\\Models\\tree.3DS"), perPixelLightingEffect, matWhiteArray, 1, treeTextureArray, 1);
-	tree0->setWorldMatrix(XMMatrixScaling(1.0f, 1.0f, 1.0f) * XMMatrixTranslation(15, 0, 4));
+	tree0 = new Model(device, wstring(L"Resources\\Models\\tree.3DS"), treeEffect, matWhiteArray, 1, treeTextureArray, 1);
+	tree0->setWorldMatrix(XMMatrixScaling(1.0f, 1.0f, 1.0f) * XMMatrixTranslation(0, 0, 0));
 	tree0->update(context);
 
-	tree1 = new Model(device, wstring(L"Resources\\Models\\tree.3DS"), perPixelLightingEffect, matWhiteArray, 1, treeTextureArray, 1);
+	tree1 = new Model(device, wstring(L"Resources\\Models\\tree.3DS"), treeEffect, matWhiteArray, 1, treeTextureArray, 1);
 	tree1->setWorldMatrix(XMMatrixScaling(1.0f, 1.0f, 1.0f) * XMMatrixTranslation(4, 0, 15));
 	tree1->update(context);
 
-	tree2 = new Model(device, wstring(L"Resources\\Models\\tree.3DS"), perPixelLightingEffect, matWhiteArray, 1, treeTextureArray, 1);
+	tree2 = new Model(device, wstring(L"Resources\\Models\\tree.3DS"), treeEffect, matWhiteArray, 1, treeTextureArray, 1);
 	tree2->setWorldMatrix(XMMatrixScaling(1.0f, 1.0f, 1.0f) * XMMatrixTranslation(15, 0, 15));
 	tree2->update(context);
 

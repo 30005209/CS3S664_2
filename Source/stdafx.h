@@ -49,3 +49,22 @@
 #include <DirectXTK\WICTextureLoader.h>
 
 #include <System.h>
+
+using namespace std;
+using namespace DirectX;
+using DirectX::XMQuaternionRotationRollPitchYaw;
+using DirectX::XMQuaternionSlerp;
+using DirectX::XMMatrixRotationQuaternion;
+using DirectX::XMMatrixRotationZ;
+using DirectX::XMMatrixRotationY;
+using DirectX::XMMatrixRotationX;
+using DirectX::XMMatrixScaling;
+using DirectX::XMMatrixTranslation;
+using DirectX::XMConvertToRadians;
+using DirectX::XMMatrixIdentity;
+using DirectX::XMVectorZero;
+using DirectX::XMVectorSet;
+using DirectX::XMVECTOR;
+using DirectX::XMFLOAT3;
+using DirectX::XMFLOAT2;
+using DirectX::XMMATRIX;

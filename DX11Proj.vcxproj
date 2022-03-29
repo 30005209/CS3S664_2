@@ -95,6 +95,7 @@
     <ClInclude Include="Source\FirstPersonCamera.h" />
     <ClInclude Include="Source\Grid.h" />
     <ClInclude Include="Source\Model.h" />
+    <ClInclude Include="Source\ParticleSystem.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\System.h" />
     <ClInclude Include="Source\CGDClock.h" />
@@ -119,6 +120,7 @@
     <ClCompile Include="Source\FirstPersonCamera.cpp" />
     <ClCompile Include="Source\Grid.cpp" />
     <ClCompile Include="Source\Model.cpp" />
+    <ClCompile Include="Source\ParticleSystem.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\System.cpp" />
     <ClCompile Include="Source\CGDClock.cpp" />
@@ -147,6 +149,12 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
     </FxCompile>
     <FxCompile Include="Shaders\hlsl\basic_texture_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Shaders\hlsl\fire_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Shaders\hlsl\fire_vs.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="Shaders\hlsl\grass_ps.hlsl">

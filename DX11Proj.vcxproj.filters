@@ -91,6 +91,9 @@
     <ClInclude Include="Source\FirstPersonCamera.h">
       <Filter>App Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\ParticleSystem.h">
+      <Filter>App Models</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GUMemory.cpp">
@@ -153,6 +156,9 @@
     <ClCompile Include="Source\FirstPersonCamera.cpp">
       <Filter>App Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ParticleSystem.cpp">
+      <Filter>App Models</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shaders\hlsl\basic_colour_ps.hlsl">
@@ -204,6 +210,12 @@
       <Filter>Shaders</Filter>
     </FxCompile>
     <FxCompile Include="Shaders\hlsl\tree_vs.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\hlsl\fire_ps.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\hlsl\fire_vs.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
   </ItemGroup>

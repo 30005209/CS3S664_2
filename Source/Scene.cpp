@@ -67,8 +67,45 @@ HRESULT Scene::initialiseSceneResources() {
 	// Add Code Here ( Load reflection_map_vs.cso and reflection_map_ps.cso  )
 	reflectionMappingEffect = new Effect(device, "Shaders\\cso\\reflection_map_vs.cso", "Shaders\\cso\\reflection_map_ps.cso", extVertexDesc, ARRAYSIZE(extVertexDesc));
 	waterEffect = new Effect(device, "Shaders\\cso\\ocean_vs.cso", "Shaders\\cso\\ocean_ps.cso", extVertexDesc, ARRAYSIZE(extVertexDesc));
+	
 	grassEffect = new Effect(device, "Shaders\\cso\\grass_vs.cso", "Shaders\\cso\\grass_ps.cso", extVertexDesc, ARRAYSIZE(extVertexDesc));
 	treeEffect = new Effect(device, "Shaders\\cso\\tree_vs.cso", "Shaders\\cso\\tree_ps.cso", extVertexDesc, ARRAYSIZE(extVertexDesc));
+	fireEffect = new Effect(device, "Shaders\\cso\\fire_vs.cso", "Shaders\\cso\\fire_ps.cso", particleVertexDesc, ARRAYSIZE(particleVertexDesc));
+	smokeEffect = new Effect(device, "Shaders\\cso\\fire_vs.cso", "Shaders\\cso\\fire_ps.cso", particleVertexDesc, ARRAYSIZE(particleVertexDesc));
+
+	//Blend States
+	// FOILAGE
+	ID3D11BlendState* foilageBSState = grassEffect->getBlendState();
+	D3D11_BLEND_DESC foilageBSDesc;
+	foilageBSState->GetDesc(&foilageBSDesc);
+
+	foilageBSDesc.RenderTarget[0].BlendEnable = FALSE;
+	foilageBSDesc.AlphaToCoverageEnable = TRUE;
+	grassEffect->getBlendState()->Release();
+	device->CreateBlendState(&foilageBSDesc, &foilageBSState);
+	grassEffect->setBlendState(foilageBSState);
+	treeEffect->setBlendState(foilageBSState);
+
+	// FIRE
+	ID3D11BlendState* fireBSState = grassEffect->getBlendState();
+	D3D11_BLEND_DESC fireBSDesc;
+	fireBSState->GetDesc(&fireBSDesc);
+
+	fireBSDesc.RenderTarget[0].BlendEnable = TRUE;
+	fireBSDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	fireBSDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	fireEffect->getBlendState()->Release();
+	device->CreateBlendState(&fireBSDesc, &fireBSState);
+	fireEffect->setBlendState(fireBSState);
+
+	ID3D11DepthStencilState* fireDSState = fireEffect->getDepthStencilState();
+	D3D11_DEPTH_STENCIL_DESC fireDSDesc;
+	fireDSState->GetDesc(&fireDSDesc);
+	fireDSDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
+
+	fireEffect->getDepthStencilState()->Release();
+	device->CreateDepthStencilState(&fireDSDesc, &fireDSState);
+	fireEffect->setDepthStencilState(fireDSState);
 
 	// The Effect class constructor sets default depth/stencil, rasteriser and blend states
 	// The Effect binds these states to the pipeline whenever an object using the effect is rendered
@@ -94,6 +131,11 @@ HRESULT Scene::initialiseSceneResources() {
 	treeTexture = new Texture(device, L"Resources\\Textures\\tree.tif");
 
 	brickTexture = new Texture(device, L"Resources\\Textures\\Brick_DIFFUSE.jpg");
+
+	//Fire
+	fireTexture = new Texture(device, L"Resources\\Textures\\Fire.tif");
+	smokeTexture = new Texture(device, L"Resources\\Textures\\smoke.tif");
+
 	// The BaseModel class supports multitexturing and the constructor takes a pointer to an array of shader resource views of textures. 
 	// Even if we only need 1 texture/shader resource view for an effect we still need to create an array.
 	ID3D11ShaderResourceView *skyBoxTextureArray[] = { cubeDayTexture->getShaderResourceView()};
@@ -103,6 +145,9 @@ HRESULT Scene::initialiseSceneResources() {
 	ID3D11ShaderResourceView* grassTextureArray[] = { grassDiffTexture->getShaderResourceView(), grassAlphaTexture->getShaderResourceView() };
 	ID3D11ShaderResourceView* treeTextureArray[] = { treeTexture->getShaderResourceView() };
 	ID3D11ShaderResourceView* castleTextureArray[] = { castleTexture->getShaderResourceView() };
+	ID3D11ShaderResourceView* fireTextureArray[] = { fireTexture->getShaderResourceView() };
+	ID3D11ShaderResourceView* smokeTextureArray[] = { smokeTexture->getShaderResourceView() };
+
 
 	// Setup Objects - the object below are derived from the Base model class
 	// The constructors for all objects derived from BaseModel require at least a valid pointer to the main DirectX device
@@ -165,6 +210,9 @@ HRESULT Scene::initialiseSceneResources() {
 	tree2 = new Model(device, wstring(L"Resources\\Models\\tree.3DS"), treeEffect, matWhiteArray, 1, treeTextureArray, 1);
 	tree2->setWorldMatrix(XMMatrixScaling(1.0f, 1.0f, 1.0f) * XMMatrixTranslation(15, 0, 15));
 	tree2->update(context);
+
+	fire = new ParticleSystem(device, fireEffect, matWhiteArray, 1, fireTextureArray, 1);
+	smoke = new ParticleSystem(device, fireEffect, matWhiteArray, 1, smokeTextureArray, 1);
 
 
 	// Setup a camera
@@ -311,6 +359,12 @@ HRESULT Scene::renderScene() {
 	
 	if (tree2)
 		tree2->render(context);
+
+	if (fire)
+		fire->render(context);
+
+	if (smoke)
+		smoke->render(context);
 
 	// Present current frame to the screen
 	HRESULT hr = system->presentBackBuffer();
@@ -564,6 +618,9 @@ Scene::~Scene() {
 
 	if (castle)
 		delete(castle);
+
+	if (fire)
+		delete(fire);
 
 	if (mainClock)
 		delete(mainClock);

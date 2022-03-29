@@ -14,6 +14,7 @@
 #include <Grid.h>
 #include <CBufferStructures.h>
 #include <FirstPersonCamera.h>
+#include "ParticleSystem.h"
 
 class Scene{// : public GUObject {
 
@@ -42,7 +43,15 @@ class Scene{// : public GUObject {
 	Texture *grassDiffTexture = nullptr;
 	Texture *treeTexture = nullptr;
 	Texture *castleTexture = nullptr;
+	
+	// Particles
+	Texture *fireTexture = nullptr;
+	Effect	*fireEffect = nullptr;
+	ParticleSystem *fire = nullptr;
 
+	Texture* smokeTexture = nullptr;
+	Effect* smokeEffect = nullptr;
+	ParticleSystem* smoke = nullptr;
 
 	// Add Effects to the scene
 	Effect *basicColourEffect =		nullptr;

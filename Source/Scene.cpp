@@ -71,6 +71,7 @@ HRESULT Scene::initialiseSceneResources() {
 	grassEffect = new Effect(device, "Shaders\\cso\\grass_vs.cso", "Shaders\\cso\\grass_ps.cso", extVertexDesc, ARRAYSIZE(extVertexDesc));
 	treeEffect = new Effect(device, "Shaders\\cso\\tree_vs.cso", "Shaders\\cso\\tree_ps.cso", extVertexDesc, ARRAYSIZE(extVertexDesc));
 	fireEffect = new Effect(device, "Shaders\\cso\\fire_vs.cso", "Shaders\\cso\\fire_ps.cso", particleVertexDesc, ARRAYSIZE(particleVertexDesc));
+	smokeEffect = new Effect(device, "Shaders\\cso\\fire_vs.cso", "Shaders\\cso\\fire_ps.cso", particleVertexDesc, ARRAYSIZE(particleVertexDesc));
 
 	//Blend States
 	// FOILAGE
@@ -133,6 +134,7 @@ HRESULT Scene::initialiseSceneResources() {
 
 	//Fire
 	fireTexture = new Texture(device, L"Resources\\Textures\\Fire.tif");
+	smokeTexture = new Texture(device, L"Resources\\Textures\\smoke.tif");
 
 	// The BaseModel class supports multitexturing and the constructor takes a pointer to an array of shader resource views of textures. 
 	// Even if we only need 1 texture/shader resource view for an effect we still need to create an array.
@@ -144,6 +146,8 @@ HRESULT Scene::initialiseSceneResources() {
 	ID3D11ShaderResourceView* treeTextureArray[] = { treeTexture->getShaderResourceView() };
 	ID3D11ShaderResourceView* castleTextureArray[] = { castleTexture->getShaderResourceView() };
 	ID3D11ShaderResourceView* fireTextureArray[] = { fireTexture->getShaderResourceView() };
+	ID3D11ShaderResourceView* smokeTextureArray[] = { smokeTexture->getShaderResourceView() };
+
 
 	// Setup Objects - the object below are derived from the Base model class
 	// The constructors for all objects derived from BaseModel require at least a valid pointer to the main DirectX device
@@ -208,6 +212,7 @@ HRESULT Scene::initialiseSceneResources() {
 	tree2->update(context);
 
 	fire = new ParticleSystem(device, fireEffect, matWhiteArray, 1, fireTextureArray, 1);
+	smoke = new ParticleSystem(device, fireEffect, matWhiteArray, 1, smokeTextureArray, 1);
 
 
 	// Setup a camera
@@ -357,6 +362,9 @@ HRESULT Scene::renderScene() {
 
 	if (fire)
 		fire->render(context);
+
+	if (smoke)
+		smoke->render(context);
 
 	// Present current frame to the screen
 	HRESULT hr = system->presentBackBuffer();

@@ -1,8 +1,8 @@
 ﻿  Scene.cpp
-D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(174,50): warning C4305: 'argument': truncation from 'double' to 'float'
-D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(227,61): warning C4305: 'argument': truncation from 'double' to 'float'
-D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(228,61): warning C4305: 'argument': truncation from 'double' to 'float'
-D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(288,65): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(297,26): warning C4244: '=': conversion from 'double' to 'FLOAT', possible loss of data
-D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(392,25): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(178,50): warning C4305: 'argument': truncation from 'double' to 'float'
+D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(232,61): warning C4305: 'argument': truncation from 'double' to 'float'
+D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(233,61): warning C4305: 'argument': truncation from 'double' to 'float'
+D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(293,65): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(302,26): warning C4244: '=': conversion from 'double' to 'FLOAT', possible loss of data
+D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(400,25): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   DX11Proj.vcxproj -> D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Debug\DX11Proj.exe

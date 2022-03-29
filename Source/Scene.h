@@ -49,6 +49,10 @@ class Scene{// : public GUObject {
 	Effect	*fireEffect = nullptr;
 	ParticleSystem *fire = nullptr;
 
+	Texture* smokeTexture = nullptr;
+	Effect* smokeEffect = nullptr;
+	ParticleSystem* smoke = nullptr;
+
 	// Add Effects to the scene
 	Effect *basicColourEffect =		nullptr;
 	Effect *basicLightingEffect =	nullptr;

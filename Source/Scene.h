@@ -39,6 +39,10 @@ class Scene{// : public GUObject {
 	Texture *waterNormalTexture = nullptr;
 	Texture *sharkTexture = nullptr;
 
+	Texture *grassAlphaTexture = nullptr;
+	Texture *grassDiffTexture = nullptr;
+	Texture *treeTexture = nullptr;
+
 	// Add Effects to the scene
 	Effect *basicColourEffect =		nullptr;
 	Effect *basicLightingEffect =	nullptr;
@@ -46,14 +50,25 @@ class Scene{// : public GUObject {
 	Effect *skyBoxEffect = nullptr;
 	Effect *reflectionMappingEffect = nullptr;
 	Effect *waterEffect = nullptr;
+	Effect *grassEffect = nullptr;
+	Effect *treeEffect = nullptr;
 
 	// Add objects to the scene
 	Triangle	*triangle = nullptr; //pointer to a Triangle the actual triangle is created in initialiseSceneResources
 	Box			*box = nullptr; 
 	Grid		*water = nullptr;
+	Grid		*grass = nullptr;
 	Model		*orb = nullptr;
 	Model		*orb2 = nullptr;
 	Model		*shark = nullptr;
+	Model		*tree0 = nullptr;
+	Model		*tree1 = nullptr;
+	Model		*tree2 = nullptr;
+
+	// Grass
+	float grassLength = 0.01f;
+	int numGrassPasses = 80;
+
 
 
 	// Private constructor

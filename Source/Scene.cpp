@@ -67,6 +67,8 @@ HRESULT Scene::initialiseSceneResources() {
 	// Add Code Here ( Load reflection_map_vs.cso and reflection_map_ps.cso  )
 	reflectionMappingEffect = new Effect(device, "Shaders\\cso\\reflection_map_vs.cso", "Shaders\\cso\\reflection_map_ps.cso", extVertexDesc, ARRAYSIZE(extVertexDesc));
 	waterEffect = new Effect(device, "Shaders\\cso\\ocean_vs.cso", "Shaders\\cso\\ocean_ps.cso", extVertexDesc, ARRAYSIZE(extVertexDesc));
+	grassEffect = new Effect(device, "Shaders\\cso\\grass_vs.cso", "Shaders\\cso\\grass_ps.cso", extVertexDesc, ARRAYSIZE(extVertexDesc));
+	treeEffect = new Effect(device, "Shaders\\cso\\tree_vs.cso", "Shaders\\cso\\tree_ps.cso", extVertexDesc, ARRAYSIZE(extVertexDesc));
 
 	// The Effect class constructor sets default depth/stencil, rasteriser and blend states
 	// The Effect binds these states to the pipeline whenever an object using the effect is rendered
@@ -85,6 +87,11 @@ HRESULT Scene::initialiseSceneResources() {
 	waterNormalTexture = new Texture(device, L"Resources\\Textures\\Waves.dds");
 	sharkTexture = new Texture(device, L"Resources\\Textures\\greatwhiteshark.png");
 
+	// Foiliage / grass
+	grassAlphaTexture = new Texture(device, L"Resources\\Textures\\grassAlpha.tif");
+	grassDiffTexture = new Texture(device, L"Resources\\Textures\\grass.png");
+	treeTexture = new Texture(device, L"Resources\\Textures\\tree.tif");
+
 	brickTexture = new Texture(device, L"Resources\\Textures\\Brick_DIFFUSE.jpg");
 	// The BaseModel class supports multitexturing and the constructor takes a pointer to an array of shader resource views of textures. 
 	// Even if we only need 1 texture/shader resource view for an effect we still need to create an array.
@@ -92,6 +99,8 @@ HRESULT Scene::initialiseSceneResources() {
 	ID3D11ShaderResourceView* waterTextureArray[] = { waterNormalTexture->getShaderResourceView(), cubeDayTexture->getShaderResourceView()};
 	ID3D11ShaderResourceView *brickTextureArray[] = { brickTexture->getShaderResourceView() };
 	ID3D11ShaderResourceView* sharkTextureArray[] = { sharkTexture->getShaderResourceView() };
+	ID3D11ShaderResourceView* grassTextureArray[] = { grassDiffTexture->getShaderResourceView(), grassAlphaTexture->getShaderResourceView() };
+	ID3D11ShaderResourceView* treeTextureArray[] = { treeTexture->getShaderResourceView() };
 
 	// Setup Objects - the object below are derived from the Base model class
 	// The constructors for all objects derived from BaseModel require at least a valid pointer to the main DirectX device
@@ -135,6 +144,23 @@ HRESULT Scene::initialiseSceneResources() {
 	water->setWorldMatrix(XMMatrixScaling(5, 5, 5) * XMMatrixTranslation(-10, 0, 0));
 	water->update(context);
 		
+	grass = new Grid(20, 20, device, grassEffect, matWhiteArray, 1, grassTextureArray, 2);
+	grass->setWorldMatrix(XMMatrixScaling(5, 5, 5) * XMMatrixTranslation(-10, 0, 0));
+	grass->update(context);
+
+	tree0 = new Model(device, wstring(L"Resources\\Models\\tree.3DS"), perPixelLightingEffect, matWhiteArray, 1, treeTextureArray, 1);
+	tree0->setWorldMatrix(XMMatrixScaling(1.0f, 1.0f, 1.0f) * XMMatrixTranslation(15, 0, 4));
+	tree0->update(context);
+
+	tree1 = new Model(device, wstring(L"Resources\\Models\\tree.3DS"), perPixelLightingEffect, matWhiteArray, 1, treeTextureArray, 1);
+	tree1->setWorldMatrix(XMMatrixScaling(1.0f, 1.0f, 1.0f) * XMMatrixTranslation(4, 0, 15));
+	tree1->update(context);
+
+	tree2 = new Model(device, wstring(L"Resources\\Models\\tree.3DS"), perPixelLightingEffect, matWhiteArray, 1, treeTextureArray, 1);
+	tree2->setWorldMatrix(XMMatrixScaling(1.0f, 1.0f, 1.0f) * XMMatrixTranslation(15, 0, 15));
+	tree2->update(context);
+
+
 	// Setup a camera
 	// The LookAtCamera is derived from the base Camera class. The constructor for the Camera class requires a valid pointer to the main DirectX device
 	// and and 3 vectors to define the initial position, up vector and target for the camera.
@@ -212,6 +238,8 @@ HRESULT Scene::updateScene(ID3D11DeviceContext *context,Camera *camera) {
 	orb2->setWorldMatrix(orb2->getWorldMatrix()* XMMatrixRotationZ(dT));
 	orb2->update(context);
 	
+	water->update(context);
+
 	//shark->setWorldMatrix(shark->getWorldMatrix() * XMMatrixRotationZ(dT));
 	shark->update(context);
 
@@ -249,11 +277,30 @@ HRESULT Scene::renderScene() {
 	//if (orb2)
 	//	orb2->render(context);
 
-	if (shark)
-		shark->render(context);
+	//if (shark)
+	//	shark->render(context);
 
-	if (water)
-		water->render(context);
+	//if (water)
+	//	water->render(context);
+
+	if (grass)
+	{
+		for (int i = 0; i < numGrassPasses; i++)
+		{
+			cBufferSceneCPU->grassHeight = (grassLength / numGrassPasses) * i;
+			mapCbuffer(context, cBufferSceneCPU, cBufferSceneGPU, sizeof(CBufferScene));
+			grass->render(context);
+		}
+	}
+
+	if (tree0)
+		tree0->render(context);
+
+	if (tree1)
+		tree1->render(context);
+	
+	if (tree2)
+		tree2->render(context);
 
 	// Present current frame to the screen
 	HRESULT hr = system->presentBackBuffer();
@@ -460,6 +507,8 @@ Scene::~Scene() {
 	if (water)
 		delete(water);
 
+	if (grass)
+		delete(grass);
 
 	if (mainClock)
 		delete(mainClock);

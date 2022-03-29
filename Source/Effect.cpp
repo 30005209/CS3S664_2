@@ -80,16 +80,35 @@ void Effect::initDefaultStates(ID3D11Device *device ){
 	if (!SUCCEEDED(hr))
 		throw std::exception("Cannot create DepthStencil state interface");
 
+	//// Initialise default blend state object (Alpha Blending Off)
+	//D3D11_BLEND_DESC	blendDesc;
+	//ZeroMemory(&blendDesc, sizeof(D3D11_BLEND_DESC));
+	//
+	//// Setup default blend state descriptor 
+	//blendDesc.AlphaToCoverageEnable = FALSE; // Use pixel coverage info from rasteriser (default FALSE)
+	//blendDesc.IndependentBlendEnable = FALSE; // The following array of render target blend properties uses the blend properties from RenderTarget[0] for ALL render targets
+	//blendDesc.RenderTarget[0].BlendEnable = FALSE;
+	//blendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_ONE;
+	//blendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_ZERO;
+	//blendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+	//blendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ZERO;
+	//blendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
+	//blendDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	//blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+	//
+	//hr = device->CreateBlendState(&blendDesc, &BlendState);
+
+
 	// Initialise default blend state object (Alpha Blending On)
 	D3D11_BLEND_DESC	blendDesc;
 	ZeroMemory(&blendDesc, sizeof(D3D11_BLEND_DESC));
-
+	
 	// Setup default blend state descriptor 
 	blendDesc.AlphaToCoverageEnable = FALSE; // Use pixel coverage info from rasteriser (default FALSE)
 	blendDesc.IndependentBlendEnable = FALSE; // The following array of render target blend properties uses the blend properties from RenderTarget[0] for ALL render targets
 	blendDesc.RenderTarget[0].BlendEnable = TRUE;
-	blendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_ONE;
-	blendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_ZERO;
+	blendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	blendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
 	blendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
 	blendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ZERO;
 	blendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
@@ -98,6 +117,26 @@ void Effect::initDefaultStates(ID3D11Device *device ){
 
 	// Create blendState object (BlendState) based on the given descriptor
 	hr = device->CreateBlendState(&blendDesc, &BlendState);
+	
+	//// Initialise default blend state object (Alpha Blending On)
+	//D3D11_BLEND_DESC	blendDesc;
+	//ZeroMemory(&blendDesc, sizeof(D3D11_BLEND_DESC));
+	//
+	//// Setup default blend state descriptor 
+	//blendDesc.AlphaToCoverageEnable = FALSE; // Use pixel coverage info from rasteriser (default FALSE)
+	//blendDesc.IndependentBlendEnable = FALSE; // The following array of render target blend properties uses the blend properties from RenderTarget[0] for ALL render targets
+	//blendDesc.RenderTarget[0].BlendEnable = TRUE;
+	//blendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_ONE;
+	//blendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_ZERO;
+	//blendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+	//blendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ZERO;
+	//blendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
+	//blendDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	//blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+	//
+	//// Create blendState object (BlendState) based on the given descriptor
+	//hr = device->CreateBlendState(&blendDesc, &BlendState);
+
 	if (!SUCCEEDED(hr))
 		throw std::exception("Cannot create Blend state interface");
 
@@ -131,9 +170,6 @@ Effect::Effect(ID3D11Device *device, const char *vertexShaderPath, const char * 
 	free(tmpShaderBytecode);
 	initDefaultStates(device);
 }
-
-
-
 
 Effect::~Effect()
 {

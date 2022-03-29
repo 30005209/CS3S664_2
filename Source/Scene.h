@@ -8,13 +8,12 @@
 #include <Windows.h>
 #include <CGDClock.h>
 #include <Camera.h>
-#include <LookAtCamera.h>
 #include <Triangle.h>
 #include "Model.h"
 #include <Box.h>
 #include <Grid.h>
 #include <CBufferStructures.h>
-
+#include <FirstPersonCamera.h>
 
 class Scene{// : public GUObject {
 
@@ -26,7 +25,7 @@ class Scene{// : public GUObject {
 
 	D3D11_VIEWPORT							viewport;
 	CGDClock								*mainClock;
-	LookAtCamera							*mainCamera;
+	FirstPersonCamera*mainCamera;
 
 	CBufferScene *cBufferSceneCPU = nullptr;
 	ID3D11Buffer *cBufferSceneGPU = nullptr;

@@ -88,6 +88,9 @@
     <ClInclude Include="Source\Grid.h">
       <Filter>App Models</Filter>
     </ClInclude>
+    <ClInclude Include="Source\FirstPersonCamera.h">
+      <Filter>App Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GUMemory.cpp">
@@ -146,6 +149,9 @@
     </ClCompile>
     <ClCompile Include="Source\Grid.cpp">
       <Filter>App Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FirstPersonCamera.cpp">
+      <Filter>App Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

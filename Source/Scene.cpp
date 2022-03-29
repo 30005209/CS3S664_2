@@ -86,6 +86,7 @@ HRESULT Scene::initialiseSceneResources() {
 	cubeDayTexture = new Texture(device, L"Resources\\Textures\\grassenvmap1024.dds");
 	waterNormalTexture = new Texture(device, L"Resources\\Textures\\Waves.dds");
 	sharkTexture = new Texture(device, L"Resources\\Textures\\greatwhiteshark.png");
+	castleTexture = new Texture(device, L"Resources\\Textures\\castle.jpg");
 
 	// Foiliage / grass
 	grassAlphaTexture = new Texture(device, L"Resources\\Textures\\grassAlpha.tif");
@@ -101,6 +102,7 @@ HRESULT Scene::initialiseSceneResources() {
 	ID3D11ShaderResourceView* sharkTextureArray[] = { sharkTexture->getShaderResourceView() };
 	ID3D11ShaderResourceView* grassTextureArray[] = { grassDiffTexture->getShaderResourceView(), grassAlphaTexture->getShaderResourceView() };
 	ID3D11ShaderResourceView* treeTextureArray[] = { treeTexture->getShaderResourceView() };
+	ID3D11ShaderResourceView* castleTextureArray[] = { castleTexture->getShaderResourceView() };
 
 	// Setup Objects - the object below are derived from the Base model class
 	// The constructors for all objects derived from BaseModel require at least a valid pointer to the main DirectX device
@@ -139,6 +141,10 @@ HRESULT Scene::initialiseSceneResources() {
 	shark->setWorldMatrix(XMMatrixScaling(0.5, 0.5, 0.5) * XMMatrixTranslation(5, -1, 10));
 	shark->update(context);
 
+	castle = new Model(device, wstring(L"Resources\\Models\\castle.3DS"), perPixelLightingEffect, matWhiteArray, 1, castleTextureArray, 1);
+	castle->setWorldMatrix(XMMatrixScaling(4.0f, 4.0f, 4.0f) * XMMatrixTranslation(10, 0, 10));
+	castle->update(context);
+
 	// Water init - final int is number of textures
 	water = new Grid(20, 20, device, waterEffect, matWhiteArray, 1, waterTextureArray, 2);
 	water->setWorldMatrix(XMMatrixScaling(5, 5, 5) * XMMatrixTranslation(-10, 0, 0));
@@ -166,7 +172,8 @@ HRESULT Scene::initialiseSceneResources() {
 	// and and 3 vectors to define the initial position, up vector and target for the camera.
 	// The camera class  manages a Cbuffer containing view/projection matrix properties. It has methods to update the cbuffers if the camera moves changes  
 	// The camera constructor and update methods also attaches the camera CBuffer to the pipeline at slot b1 for vertex and pixel shaders
-	mainCamera =  new LookAtCamera(device, XMVectorSet(0.0, 0.0, -10.0, 1.0f), XMVectorSet(0.0f, 1.0f, 0.0f, 1.0f), XMVectorZero());
+	mainCamera = new FirstPersonCamera(device, XMVectorSet(-9.0, 2.0, 17.0,	1.0f), XMVectorSet(0.0f, 1.0f, 0.0f, 1.0f), XMVectorSet(0.8f, 0.0f, -1.0f, 1.0f));
+	mainCamera->setFlying(false);
 
 	// Add a CBuffer to store light properties - you might consider creating a Light Class to manage this CBuffer
 	// Allocate 16 byte aligned block of memory for "main memory" copy of cBufferLight
@@ -283,6 +290,9 @@ HRESULT Scene::renderScene() {
 	//if (water)
 	//	water->render(context);
 
+	if (castle)
+		castle->render(context);
+
 	if (grass)
 	{
 		for (int i = 0; i < numGrassPasses; i++)
@@ -315,30 +325,56 @@ HRESULT Scene::renderScene() {
 void Scene::handleMouseLDrag(const POINT &disp) {
 	//LookAtCamera
 
-	mainCamera->rotateElevation((float)-disp.y * 0.01f);
-	mainCamera->rotateOnYAxis((float)-disp.x * 0.01f);
+	//mainCamera->rotateElevation((float)-disp.y * 0.01f);
+	//mainCamera->rotateOnYAxis((float)-disp.x * 0.01f);
 
 	//FirstPersonCamera
-	//	mainCamera->elevate((float)-disp.y * 0.01f);
-	//	mainCamera->turn((float)-disp.x * 0.01f);
+	mainCamera->elevate((float)-disp.y * 0.01f);
+	mainCamera->turn((float)-disp.x * 0.01f);
 }
 
 // Process mouse wheel movement
 void Scene::handleMouseWheel(const short zDelta) {
 	//LookAtCamera
 
-	if (zDelta<0)
-		mainCamera->zoomCamera(1.2f);
-	else if (zDelta>0)
-		mainCamera->zoomCamera(0.9f);
+	//if (zDelta<0)
+	//	mainCamera->zoomCamera(1.2f);
+	//else if (zDelta>0)
+	//	mainCamera->zoomCamera(0.9f);
 	//cout << "zoom" << endl;
 	//FirstPersonCamera
-	//mainCamera->move(zDelta*0.01);
+	mainCamera->move(zDelta*0.01);
 }
 
 // Process key down event.  keyCode indicates the key pressed while extKeyFlags indicates the extended key status at the time of the key down event (see http://msdn.microsoft.com/en-gb/library/windows/desktop/ms646280%28v=vs.85%29.aspx).
 void Scene::handleKeyDown(const WPARAM keyCode, const LPARAM extKeyFlags) {
 	// Add key down handler here...
+	if (keyCode == VK_HOME)
+		mainCamera->elevate(0.05f);
+
+	if (keyCode == VK_END)
+		mainCamera->elevate(-0.05f);
+
+	if (keyCode == VK_LEFT)
+		mainCamera->turn(-0.05f);
+
+	if (keyCode == VK_RIGHT)
+		mainCamera->turn(0.05f);
+
+	if (keyCode == VK_SPACE)
+	{
+		bool isFlying = mainCamera->toggleFlying();
+		if (isFlying)
+			cout << "Flying mode is on" << endl;
+		else
+			cout << "Flying mode is off" << endl;
+	}
+	if (keyCode == VK_UP)
+		mainCamera->move(0.5);
+
+	if (keyCode == VK_DOWN)
+		mainCamera->move(-0.5);
+
 }
 
 // Process key up event.  keyCode indicates the key released while extKeyFlags indicates the extended key status at the time of the key up event (see http://msdn.microsoft.com/en-us/library/windows/desktop/ms646281%28v=vs.85%29.aspx).
@@ -432,6 +468,15 @@ HRESULT Scene::updateAndRenderScene() {
 	HRESULT hr = updateScene(context, (Camera*)mainCamera);
 	if (SUCCEEDED(hr))
 		hr = renderScene();
+
+	if (!mainCamera->getFlying())//if not flying stick to ground
+	{
+		XMVECTOR camPos = mainCamera->getPos();
+		float camHeight = 2;//grass->CalculateYValueWorld(camPos.vector4_f32[0],
+			//camPos.vector4_f32[2]);
+		mainCamera->setHeight(camHeight);
+	}
+
 	return hr;
 }
 
@@ -509,6 +554,16 @@ Scene::~Scene() {
 
 	if (grass)
 		delete(grass);
+
+	if(tree0)
+		delete(tree0);
+	if(tree1)
+		delete(tree1);
+	if (tree2)
+		delete(tree2);
+
+	if (castle)
+		delete(castle);
 
 	if (mainClock)
 		delete(mainClock);

@@ -135,6 +135,10 @@ HRESULT Scene::initialiseSceneResources() {
 
 	// Setup Textures
 	// The Texture class is a helper class to load textures
+
+	heightMap = new Texture(device, L"Resources\\Textures\\heightmap.bmp");
+	normalMap = new Texture(device, L"Resources\\Textures\\normalmap.bmp");
+
 	cubeDayTexture = new Texture(device, L"Resources\\Textures\\grassenvmap1024.dds");
 	waterNormalTexture = new Texture(device, L"Resources\\Textures\\Waves.dds");
 	sharkTexture = new Texture(device, L"Resources\\Textures\\greatwhiteshark.png");
@@ -218,20 +222,28 @@ HRESULT Scene::initialiseSceneResources() {
 	water->setWorldMatrix(XMMatrixScaling(5, 5, 5) * XMMatrixTranslation(-10, 0, 0));
 	water->update(context);
 		
-	grass = new Grid(20, 20, device, grassEffect, matWhiteArray, 1, grassTextureArray, 2);
-	grass->setWorldMatrix(XMMatrixScaling(5, 5, 5) * XMMatrixTranslation(-10, 0, 0));
+	//grass = new Grid(20, 20, device, grassEffect, matWhiteArray, 1, grassTextureArray, 2);
+	//grass->setWorldMatrix(XMMatrixScaling(5, 5, 5) * XMMatrixTranslation(-10, 0, 0));
+	//grass->update(context);
+
+	grass = new Terrain(device, context, 100, 100, heightMap->getTexture(), normalMap->getTexture(), grassEffect, matWhiteArray, 1, grassTextureArray, 2);
+	grass->setWorldMatrix(XMMatrixTranslation(-50, -0.01, -50));
 	grass->update(context);
 
 	tree0 = new Model(device, wstring(L"Resources\\Models\\tree.3DS"), treeEffect, matWhiteArray, 1, treeTextureArray, 1);
-	tree0->setWorldMatrix(XMMatrixScaling(1.0f, 1.0f, 1.0f) * XMMatrixTranslation(0, 0, 0));
-	tree0->update(context);
+	tree0->setWorldMatrix(XMMatrixTranslation(10, grass->CalculateYValueWorld(10, 10), 10));
+	//tree0->setWorldMatrix(XMMatrixScaling(1.0f, 1.0f, 1.0f) * XMMatrixTranslation(0, 0, 0));
+	tree0->update(context); 
+
 
 	tree1 = new Model(device, wstring(L"Resources\\Models\\tree.3DS"), treeEffect, matWhiteArray, 1, treeTextureArray, 1);
-	tree1->setWorldMatrix(XMMatrixScaling(1.0f, 1.0f, 1.0f) * XMMatrixTranslation(4, 0, 15));
+	tree1->setWorldMatrix(XMMatrixTranslation(50, grass->CalculateYValueWorld(10, 10), 10));
+	//tree1->setWorldMatrix(XMMatrixScaling(1.0f, 1.0f, 1.0f) * XMMatrixTranslation(4, 0, 15));
 	tree1->update(context);
 
 	tree2 = new Model(device, wstring(L"Resources\\Models\\tree.3DS"), treeEffect, matWhiteArray, 1, treeTextureArray, 1);
-	tree2->setWorldMatrix(XMMatrixScaling(1.0f, 1.0f, 1.0f) * XMMatrixTranslation(15, 0, 15));
+	tree2->setWorldMatrix(XMMatrixTranslation(20, grass->CalculateYValueWorld(10, 10), 50));
+	//tree2->setWorldMatrix(XMMatrixScaling(1.0f, 1.0f, 1.0f) * XMMatrixTranslation(15, 0, 15));
 	tree2->update(context);
 
 	fire = new ParticleSystem(device, fireEffect, matWhiteArray, 1, fireTextureArray, 1);
@@ -365,24 +377,24 @@ HRESULT Scene::renderScene() {
 	if (box)
 		box->render(context);
 	
-	// Render orb
-	if (orb)
-		orb->render(context);
-	// Render orb2
-	if (orb2)
-	{
-		glow->blurModel(orb2, system->getDepthStencilSRV());
-		orb2->render(context);
-	}
+	//// Render orb
+	//if (orb)
+	//	orb->render(context);
+	//// Render orb2
+	//if (orb2)
+	//{
+	//	glow->blurModel(orb2, system->getDepthStencilSRV());
+	//	orb2->render(context);
+	//}
 
-	if (shark)
-		shark->render(context);
+	//if (shark)
+	//	shark->render(context);
 
 	if (water)
 		water->render(context);
 	
-	if (castle)
-		castle->render(context);
+	//if (castle)
+	//	castle->render(context);
 	
 	if (grass)
 	{
@@ -403,11 +415,11 @@ HRESULT Scene::renderScene() {
 	if (tree2)
 		tree2->render(context);
 	
-	if (fire)
-		fire->render(context);
-	
-	if (smoke)
-		smoke->render(context);
+	//if (fire)
+	//	fire->render(context);
+	//
+	//if (smoke)
+	//	smoke->render(context);
 
 	DrawFlare(context);
 
@@ -658,8 +670,10 @@ Scene::~Scene() {
 
 	if(tree0)
 		delete(tree0);
+
 	if(tree1)
 		delete(tree1);
+
 	if (tree2)
 		delete(tree2);
 
@@ -674,11 +688,18 @@ Scene::~Scene() {
 
 	if (mainClock)
 		delete(mainClock);
+
 	if (mainCamera)
 		delete(mainCamera);
 	
 	if (system)
 		delete(system);
+
+	if (heightMap)
+		delete heightMap;
+
+	if (normalMap)
+		delete normalMap;
 
 	if (flares)
 	{
@@ -686,9 +707,10 @@ Scene::~Scene() {
 		{
 			delete flares[i];
 		}
-
 	}
 
+	if (glow)
+		delete glow;
 
 	if (wndHandle)
 		DestroyWindow(wndHandle);

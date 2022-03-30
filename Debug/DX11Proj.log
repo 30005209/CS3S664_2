@@ -1,1 +1,17 @@
-﻿  DX11Proj.vcxproj -> Y:\Documents\Year 3\Graphics2\CS3S664_2\Debug\DX11Proj.exe
+﻿  Scene.cpp
+D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(205,50): warning C4305: 'argument': truncation from 'double' to 'float'
+D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(230,59): warning C4305: 'argument': truncation from 'double' to 'float'
+D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(256,129): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(256,105): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(256,81): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(258,129): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(258,105): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(258,81): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(279,70): warning C4305: 'argument': truncation from 'double' to 'float'
+D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(280,70): warning C4305: 'argument': truncation from 'double' to 'float'
+D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(340,65): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(350,74): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(350,108): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(354,26): warning C4244: '=': conversion from 'double' to 'FLOAT', possible loss of data
+D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(459,25): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  DX11Proj.vcxproj -> D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Debug\DX11Proj.exe

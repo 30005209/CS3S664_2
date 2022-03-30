@@ -107,7 +107,7 @@ struct LightStruct
 	XMCOLOR specular;
 };
 
-
-
-
-
+__declspec(align(16)) struct CBufferTextSize {
+	INT						Width;
+	INT						Height;
+};

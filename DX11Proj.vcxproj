@@ -87,15 +87,18 @@
   <ItemGroup>
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\BaseModel.h" />
+    <ClInclude Include="Source\BlurUtility.h" />
     <ClInclude Include="Source\Box.h" />
     <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Source\CBufferStructures.h" />
     <ClInclude Include="Source\Effect.h" />
     <ClInclude Include="Source\CGDConsole.h" />
     <ClInclude Include="Source\FirstPersonCamera.h" />
+    <ClInclude Include="Source\Flare.h" />
     <ClInclude Include="Source\Grid.h" />
     <ClInclude Include="Source\Model.h" />
     <ClInclude Include="Source\ParticleSystem.h" />
+    <ClInclude Include="Source\Quad.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\System.h" />
     <ClInclude Include="Source\CGDClock.h" />
@@ -113,14 +116,17 @@
   <ItemGroup>
     <ClCompile Include="Source\Animation.cpp" />
     <ClCompile Include="Source\BaseModel.cpp" />
+    <ClCompile Include="Source\BlurUtility.cpp" />
     <ClCompile Include="Source\Box.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\Effect.cpp" />
     <ClCompile Include="Source\CGDConsole.cpp" />
     <ClCompile Include="Source\FirstPersonCamera.cpp" />
+    <ClCompile Include="Source\Flare.cpp" />
     <ClCompile Include="Source\Grid.cpp" />
     <ClCompile Include="Source\Model.cpp" />
     <ClCompile Include="Source\ParticleSystem.cpp" />
+    <ClCompile Include="Source\Quad.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\System.cpp" />
     <ClCompile Include="Source\CGDClock.cpp" />
@@ -151,10 +157,31 @@
     <FxCompile Include="Shaders\hlsl\basic_texture_vs.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
     </FxCompile>
+    <FxCompile Include="Shaders\hlsl\convolve_u_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Shaders\hlsl\convolve_v_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Shaders\hlsl\copy_depth_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Shaders\hlsl\copy_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Shaders\hlsl\emissive_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+    </FxCompile>
     <FxCompile Include="Shaders\hlsl\fire_ps.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
     </FxCompile>
     <FxCompile Include="Shaders\hlsl\fire_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Shaders\hlsl\flare_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Shaders\hlsl\flare_vs.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="Shaders\hlsl\grass_ps.hlsl">
@@ -179,6 +206,9 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
     </FxCompile>
     <FxCompile Include="Shaders\hlsl\reflection_map_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Shaders\hlsl\screen_quad_vs.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="Shaders\hlsl\sky_box_ps.hlsl">

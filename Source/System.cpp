@@ -234,3 +234,8 @@ ID3D11Texture2D* System::getDepthStencilBuffer()
 {
 	return depthStencilBuffer;
 }
+
+ID3D11ShaderResourceView* System::getDepthStencilSRV()
+{
+	return depthStencilSRV;
+}

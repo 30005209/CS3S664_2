@@ -51,7 +51,7 @@
 #include <System.h>
 
 using namespace std;
-using namespace DirectX;
+using namespace DirectX::PackedVector;
 using DirectX::XMQuaternionRotationRollPitchYaw;
 using DirectX::XMQuaternionSlerp;
 using DirectX::XMMatrixRotationQuaternion;

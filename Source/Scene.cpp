@@ -17,6 +17,7 @@
 #include <Effect.h>
 #include <VertexStructures.h>
 #include <Texture.h>
+#include <BlurUtility.h>
 
 using namespace std;
 using namespace DirectX;
@@ -72,6 +73,7 @@ HRESULT Scene::initialiseSceneResources() {
 	treeEffect = new Effect(device, "Shaders\\cso\\tree_vs.cso", "Shaders\\cso\\tree_ps.cso", extVertexDesc, ARRAYSIZE(extVertexDesc));
 	fireEffect = new Effect(device, "Shaders\\cso\\fire_vs.cso", "Shaders\\cso\\fire_ps.cso", particleVertexDesc, ARRAYSIZE(particleVertexDesc));
 	smokeEffect = new Effect(device, "Shaders\\cso\\fire_vs.cso", "Shaders\\cso\\fire_ps.cso", particleVertexDesc, ARRAYSIZE(particleVertexDesc));
+	flareEffect = new Effect(device, "Shaders\\cso\\flare_vs.cso", "Shaders\\cso\\flare_ps.cso", flareVertexDesc, ARRAYSIZE(flareVertexDesc));
 
 	//Blend States
 	// FOILAGE
@@ -107,6 +109,18 @@ HRESULT Scene::initialiseSceneResources() {
 	device->CreateDepthStencilState(&fireDSDesc, &fireDSState);
 	fireEffect->setDepthStencilState(fireDSState);
 
+	//FLARE
+	ID3D11BlendState* flareBlendState = flareEffect->getBlendState();
+	D3D11_BLEND_DESC blendDesc;
+	flareBlendState->GetDesc(&blendDesc);
+	blendDesc.AlphaToCoverageEnable = FALSE;
+	blendDesc.RenderTarget[0].BlendEnable = TRUE;
+	blendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_ONE;
+	blendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_ONE;
+	// Create custom flare blend state object
+	flareBlendState->Release(); device->CreateBlendState(&blendDesc, &flareBlendState);
+	flareEffect->setBlendState(flareBlendState);
+
 	// The Effect class constructor sets default depth/stencil, rasteriser and blend states
 	// The Effect binds these states to the pipeline whenever an object using the effect is rendered
 	// We can customise states if required
@@ -136,6 +150,11 @@ HRESULT Scene::initialiseSceneResources() {
 	fireTexture = new Texture(device, L"Resources\\Textures\\Fire.tif");
 	smokeTexture = new Texture(device, L"Resources\\Textures\\smoke.tif");
 
+	//Flare
+	flare1Texture = new Texture(device, L"Resources\\Textures\\flares\\divine.png");
+	flare2Texture = new Texture(device, L"Resources\\Textures\\flares\\extendring.png");
+
+
 	// The BaseModel class supports multitexturing and the constructor takes a pointer to an array of shader resource views of textures. 
 	// Even if we only need 1 texture/shader resource view for an effect we still need to create an array.
 	ID3D11ShaderResourceView *skyBoxTextureArray[] = { cubeDayTexture->getShaderResourceView()};
@@ -146,7 +165,10 @@ HRESULT Scene::initialiseSceneResources() {
 	ID3D11ShaderResourceView* treeTextureArray[] = { treeTexture->getShaderResourceView() };
 	ID3D11ShaderResourceView* castleTextureArray[] = { castleTexture->getShaderResourceView() };
 	ID3D11ShaderResourceView* fireTextureArray[] = { fireTexture->getShaderResourceView() };
-	ID3D11ShaderResourceView* smokeTextureArray[] = { smokeTexture->getShaderResourceView() };
+	ID3D11ShaderResourceView* smokeTextureArray[] = { smokeTexture->getShaderResourceView() }; 
+	ID3D11ShaderResourceView* flare1TextureArray[] = { flare1Texture->getShaderResourceView() };
+	ID3D11ShaderResourceView* flare2TextureArray[] = { flare2Texture->getShaderResourceView() };
+
 
 
 	// Setup Objects - the object below are derived from the Base model class
@@ -213,6 +235,18 @@ HRESULT Scene::initialiseSceneResources() {
 
 	fire = new ParticleSystem(device, fireEffect, matWhiteArray, 1, fireTextureArray, 1);
 	smoke = new ParticleSystem(device, fireEffect, matWhiteArray, 1, smokeTextureArray, 1);
+
+	// Create Flares
+	for (int i = 0; i < numFlares; i++)
+	{
+		if (randM1P1() > 0)
+			flares[i] = new Flare(XMFLOAT3(-125.0, 60.0, 70.0), XMCOLOR(randM1P1() * 0.5 + 0.5, randM1P1() * 0.5 + 0.5, randM1P1() * 0.5 + 0.5, (float)i / numFlares), device, flareEffect, NULL, 0, flare1TextureArray, 1);
+		else
+			flares[i] = new Flare(XMFLOAT3(-125.0, 60.0, 70.0), XMCOLOR(randM1P1() * 0.5 + 0.5, randM1P1() * 0.5 + 0.5, randM1P1() * 0.5 + 0.5, (float)i / numFlares), device, flareEffect, NULL, 0, flare2TextureArray, 1);
+	}
+
+
+	glow = new BlurUtility(system->getDevice(), context, 256, 256);
 
 
 	// Setup a camera
@@ -324,7 +358,7 @@ HRESULT Scene::renderScene() {
 	// Render SkyBox
 	if (box)
 		box->render(context);
-
+	
 	// Render orb
 	//if (orb)
 	//	orb->render(context);
@@ -332,39 +366,43 @@ HRESULT Scene::renderScene() {
 	//if (orb2)
 	//	orb2->render(context);
 
-	if (shark)
-		shark->render(context);
+	//if (shark)
+	//	shark->render(context);
 
 	//if (water)
 	//	water->render(context);
 	
-	if (castle)
-		castle->render(context);
+	//if (castle)
+	//	castle->render(context);
+	//
+	//if (grass)
+	//{
+	//	for (int i = 0; i < numGrassPasses; i++)
+	//	{
+	//		cBufferSceneCPU->grassHeight = (grassLength / numGrassPasses) * i;
+	//		mapCbuffer(context, cBufferSceneCPU, cBufferSceneGPU, sizeof(CBufferScene));
+	//		grass->render(context);
+	//	}
+	//}
+	//
+	//if (tree0)
+	//	tree0->render(context);
+	//
+	//if (tree1)
+	//	tree1->render(context);
+	//
+	//if (tree2)
+	//	tree2->render(context);
+	//
+	//if (fire)
+	//	fire->render(context);
+	//
+	//if (smoke)
+	//	smoke->render(context);
 
-	if (grass)
-	{
-		for (int i = 0; i < numGrassPasses; i++)
-		{
-			cBufferSceneCPU->grassHeight = (grassLength / numGrassPasses) * i;
-			mapCbuffer(context, cBufferSceneCPU, cBufferSceneGPU, sizeof(CBufferScene));
-			grass->render(context);
-		}
-	}
+	DrawFlare(context);
 
-	if (tree0)
-		tree0->render(context);
 
-	if (tree1)
-		tree1->render(context);
-	
-	if (tree2)
-		tree2->render(context);
-
-	if (fire)
-		fire->render(context);
-
-	if (smoke)
-		smoke->render(context);
 
 	// Present current frame to the screen
 	HRESULT hr = system->presentBackBuffer();
@@ -661,3 +699,31 @@ HRESULT Scene::resizeResources() {
 	return S_OK;
 }
 
+void Scene::DrawFlare(ID3D11DeviceContext* context)
+{
+	// Draw the Fire (Draw all transparent objects last)
+	if (flares) {
+
+		ID3D11RenderTargetView* tempRT[1] = { 0 };
+		ID3D11DepthStencilView* tempDS = nullptr;
+
+		// Set NULL depth buffer so we can also use the Depth Buffer as a shader
+		// resource this is OK as we don’t need depth testing for the flares
+
+		ID3D11DepthStencilView* nullDSV[1]; nullDSV[0] = NULL;
+		context->OMGetRenderTargets(1, tempRT, &tempDS);
+		context->OMSetRenderTargets(1, tempRT, NULL);
+		ID3D11ShaderResourceView* depthSRV = system->getDepthStencilSRV();
+		context->VSSetShaderResources(1, 1, &depthSRV);
+
+		for (int i = 0; i < numFlares; i++)
+			flares[i]->render(context);
+
+		// Use Null SRV to release depth shader resource so it is available for writing
+		ID3D11ShaderResourceView* nullSRV[1]; nullSRV[0] = NULL;
+		context->VSSetShaderResources(1, 1, nullSRV);
+		// Return default (read and write) depth buffer view.
+		context->OMSetRenderTargets(1, tempRT, tempDS);
+
+	}
+}

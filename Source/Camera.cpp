@@ -18,7 +18,7 @@ Camera::Camera(ID3D11Device *device,DirectX::XMVECTOR init_pos, DirectX::XMVECTO
 void Camera::initCBuffer(ID3D11Device *device){
 	cBufferCPU = (CBufferCamera*)_aligned_malloc(sizeof(CBufferCamera), 16);
 	cBufferCPU->viewMatrix = getViewMatrix();
-	projMatrix = XMMatrixPerspectiveFovLH(0.25f*3.14, 1.0, 1.0f, 1000.0f);
+	projMatrix = DirectX::XMMatrixPerspectiveFovLH(0.25f*3.14, 1.0, 1.0f, 1000.0f);
 	cBufferCPU->projMatrix = getProjMatrix();
 	XMStoreFloat4(&(cBufferCPU->eyePos), getPos());
 

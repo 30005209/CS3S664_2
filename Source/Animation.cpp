@@ -2,7 +2,7 @@
 #include "Animation.h"
 #include <iostream>
 
-using namespace DirectX;
+////using namespace DirectX;
 using namespace std;
 
 Animation::Animation(int N, double time)

@@ -23,6 +23,7 @@ class System {
 	ID3D11RenderTargetView					*renderTargetView = nullptr;
 	ID3D11DepthStencilView					*depthStencilView = nullptr;
 	ID3D11Texture2D							*depthStencilBuffer = nullptr;
+	ID3D11ShaderResourceView				*depthStencilSRV = nullptr;
 
 	// Private interface
 
@@ -59,4 +60,7 @@ public:
 	ID3D11RenderTargetView* getBackBufferRTV();
 	ID3D11DepthStencilView* getDepthStencil();
 	ID3D11Texture2D* getDepthStencilBuffer();
+	ID3D11ShaderResourceView* getDepthStencilSRV();
+
+
 };

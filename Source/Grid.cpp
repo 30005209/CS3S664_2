@@ -3,8 +3,8 @@
 #include <Grid.h>
 #include <Material.h>
 using namespace std;
-using namespace DirectX;
-//using namespace DirectX::PackedVector;
+//////using namespace DirectX;
+//using namespace DirectX::PackedVector
 
 
 

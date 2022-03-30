@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "FirstPersonCamera.h"
-using namespace DirectX;
+////using namespace DirectX;
 
 void FirstPersonCamera::move(float d)
 {

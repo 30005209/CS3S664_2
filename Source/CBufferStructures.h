@@ -1,5 +1,5 @@
 #pragma once
-using namespace DirectX;
+////using namespace DirectX;
 using namespace DirectX::PackedVector;
 // CBuffer struct
 // Use 16byte aligned so can use optimised XMMathFunctions instead of setting _XM_NO_INNTRINSICS_ define when compiling for x86
@@ -100,14 +100,14 @@ struct MaterialStruct
 };
 struct LightStruct
 {
-	XMFLOAT4 attenuation; // Constant, Linear, Quadratic Attenuation
-	XMFLOAT4 vector; //w = 1: Vec represents position, w = 0 : Vec  represents direction.
+	DirectX::XMFLOAT4 attenuation; // Constant, Linear, Quadratic Attenuation
+	DirectX::XMFLOAT4 vector; //w = 1: Vec represents position, w = 0 : Vec  represents direction.
 	XMCOLOR ambient;
 	XMCOLOR diffuse;
 	XMCOLOR specular;
 };
 
-
-
-
-
+__declspec(align(16)) struct CBufferTextSize {
+	INT						Width;
+	INT						Height;
+};

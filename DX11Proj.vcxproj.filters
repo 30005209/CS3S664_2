@@ -94,6 +94,15 @@
     <ClInclude Include="Source\ParticleSystem.h">
       <Filter>App Models</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Flare.h">
+      <Filter>App Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Quad.h">
+      <Filter>App Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BlurUtility.h">
+      <Filter>App Models</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GUMemory.cpp">
@@ -159,6 +168,15 @@
     <ClCompile Include="Source\ParticleSystem.cpp">
       <Filter>App Models</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Flare.cpp">
+      <Filter>App Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Quad.cpp">
+      <Filter>App Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BlurUtility.cpp">
+      <Filter>App Models</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shaders\hlsl\basic_colour_ps.hlsl">
@@ -216,6 +234,30 @@
       <Filter>Shaders</Filter>
     </FxCompile>
     <FxCompile Include="Shaders\hlsl\fire_vs.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\hlsl\convolve_u_ps.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\hlsl\convolve_v_ps.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\hlsl\copy_depth_ps.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\hlsl\copy_ps.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\hlsl\flare_ps.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\hlsl\flare_vs.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\hlsl\screen_quad_vs.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\hlsl\emissive_ps.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
   </ItemGroup>

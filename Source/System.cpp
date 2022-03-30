@@ -181,6 +181,17 @@ HRESULT System::setupWindowDependentResources(HWND hwnd) {
 	if (SUCCEEDED(hr))
 		hr = device->CreateDepthStencilView(depthStencilBuffer, &descDSV, &depthStencilView);
 
+	D3D11_SHADER_RESOURCE_VIEW_DESC shaderResourceViewDesc;
+	shaderResourceViewDesc.Format = DXGI_FORMAT_R24_UNORM_X8_TYPELESS;
+	shaderResourceViewDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2DMS;
+	shaderResourceViewDesc.Texture2D.MostDetailedMip = 0;
+	shaderResourceViewDesc.Texture2D.MipLevels = 1;
+
+
+	if (SUCCEEDED(hr))
+		hr = device->CreateShaderResourceView(depthStencilBuffer, &shaderResourceViewDesc, &depthStencilSRV);
+
+
 	// Release un-needed references
 	if (depthStencilBuffer)
 		depthStencilBuffer->Release();
@@ -233,4 +244,9 @@ ID3D11DepthStencilView* System::getDepthStencil() {
 ID3D11Texture2D* System::getDepthStencilBuffer()
 {
 	return depthStencilBuffer;
+}
+
+ID3D11ShaderResourceView* System::getDepthStencilSRV()
+{
+	return depthStencilSRV;
 }

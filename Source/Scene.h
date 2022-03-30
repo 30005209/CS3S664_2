@@ -15,6 +15,8 @@
 #include <CBufferStructures.h>
 #include <FirstPersonCamera.h>
 #include "ParticleSystem.h"
+#include <Flare.h>
+#include "BlurUtility.h"
 
 class Scene{// : public GUObject {
 
@@ -52,6 +54,17 @@ class Scene{// : public GUObject {
 	Texture* smokeTexture = nullptr;
 	Effect* smokeEffect = nullptr;
 	ParticleSystem* smoke = nullptr;
+
+	// Flares
+	static const int numFlares = 6;
+	Flare *flares[numFlares];
+	Texture* flare1Texture = nullptr;
+	Texture* flare2Texture = nullptr;
+	Effect* flareEffect = nullptr;
+	ParticleSystem* flare = nullptr;
+
+	// Glow
+	BlurUtility *glow = nullptr;
 
 	// Add Effects to the scene
 	Effect *basicColourEffect =		nullptr;
@@ -115,6 +128,9 @@ public:
 	
 	// Helper function to call updateScene followed by renderScene
 	HRESULT updateAndRenderScene();
+
+	//Flares
+	void DrawFlare(ID3D11DeviceContext* context);
 
 	// Destructor
 	~Scene();

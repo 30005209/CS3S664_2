@@ -5,9 +5,9 @@
 #include <iostream>
 #include <exception>
 
-using namespace std;
-using namespace DirectX;
-using namespace DirectX::PackedVector;
+//using namespace std;
+//using namespace DirectX;
+//using namespace DirectX::PackedVector;
 
 
 HRESULT Triangle::init(ID3D11Device *device) {

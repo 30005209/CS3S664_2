@@ -5,9 +5,9 @@
 #include <DirectXTK\DDSTextureLoader.h>
 #include <DirectXTK\WICTextureLoader.h>
 
-using namespace std;
-using namespace DirectX;
-using namespace DirectX::PackedVector;
+//using namespace std;
+//using namespace DirectX;
+//using namespace DirectX::PackedVector;
 Texture::Texture(ID3D11Device *device, const std::wstring& filename)
 {
 	SRV = nullptr;
@@ -19,9 +19,9 @@ Texture::Texture(ID3D11Device *device, const std::wstring& filename)
 	try
 	{
 		if (0 == ext.compare(L".bmp") || 0 == ext.compare(L".jpg") || 0 == ext.compare(L".png") || 0 == ext.compare(L".tif"))
-			hr = CreateWICTextureFromFile(device, filename.c_str(), &resource, &SRV);
+			hr = DirectX::CreateWICTextureFromFile(device, filename.c_str(), &resource, &SRV);
 		else if (0 == ext.compare(L".dds"))
-			hr = CreateDDSTextureFromFile(device, filename.c_str(), &resource, &SRV);
+			hr = DirectX::CreateDDSTextureFromFile(device, filename.c_str(), &resource, &SRV);
 		else throw exception("Texture file format not supported");
 	}
 	catch (exception& e)

@@ -5,3 +5,4 @@ D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\DX11_CS3S664_Tutorial_16_Par
 D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\DX11_CS3S664_Tutorial_16_Part1 - Sln\Debug\DX11Proj.pdb
 D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Debug\DX11Proj.exe
 D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Debug\DX11Proj.pdb
+Y:\Documents\Year 3\Graphics2\CS3S664_2\Debug\DX11Proj.exe

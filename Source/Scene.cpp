@@ -19,9 +19,9 @@
 #include <Texture.h>
 #include <BlurUtility.h>
 
-using namespace std;
-using namespace DirectX;
-using namespace DirectX::PackedVector;
+//using namespace std;
+//using namespace DirectX;
+//using namespace DirectX::PackedVector;
 
 //
 // Methods to handle initialisation, update and rendering of the scene
@@ -262,10 +262,10 @@ HRESULT Scene::initialiseSceneResources() {
 	cBufferLightCPU = (CBufferLight *)_aligned_malloc(sizeof(CBufferLight), 16);
 
 	// Fill out cBufferLightCPU
-	cBufferLightCPU->lightVec = XMFLOAT4(-5.0, 2.0, 5.0, 1.0);
-	cBufferLightCPU->lightAmbient = XMFLOAT4(0.2, 0.2, 0.2, 1.0);
-	cBufferLightCPU->lightDiffuse = XMFLOAT4(0.7, 0.7, 0.7, 1.0);
-	cBufferLightCPU->lightSpecular = XMFLOAT4(1.0, 1.0, 1.0, 1.0);
+	cBufferLightCPU->lightVec = DirectX::XMFLOAT4(-5.0, 2.0, 5.0, 1.0);
+	cBufferLightCPU->lightAmbient = DirectX::XMFLOAT4(0.2, 0.2, 0.2, 1.0);
+	cBufferLightCPU->lightDiffuse = DirectX::XMFLOAT4(0.7, 0.7, 0.7, 1.0);
+	cBufferLightCPU->lightSpecular = DirectX::XMFLOAT4(1.0, 1.0, 1.0, 1.0);
 
 	// Create GPU resource memory copy of cBufferLight
 	// fill out description (Note if we want to update the CBuffer we need  D3D11_CPU_ACCESS_WRITE)
@@ -296,7 +296,7 @@ HRESULT Scene::initialiseSceneResources() {
 	cBufferSceneCPU = (CBufferScene *)_aligned_malloc(sizeof(CBufferScene), 16);
 
 	// Fill out cBufferSceneCPU
-	cBufferSceneCPU->windDir = XMFLOAT4(1, 0, 0, 1);
+	cBufferSceneCPU->windDir = DirectX::XMFLOAT4(1, 0, 0, 1);
 	cBufferSceneCPU->Time = 0.0;
 	cBufferSceneCPU->grassHeight = 0.0;
 	
@@ -360,45 +360,45 @@ HRESULT Scene::renderScene() {
 		box->render(context);
 	
 	// Render orb
-	//if (orb)
-	//	orb->render(context);
-	//// Render orb2
-	//if (orb2)
-	//	orb2->render(context);
+	if (orb)
+		orb->render(context);
+	// Render orb2
+	if (orb2)
+		orb2->render(context);
 
-	//if (shark)
-	//	shark->render(context);
+	if (shark)
+		shark->render(context);
 
-	//if (water)
-	//	water->render(context);
+	if (water)
+		water->render(context);
 	
-	//if (castle)
-	//	castle->render(context);
-	//
-	//if (grass)
-	//{
-	//	for (int i = 0; i < numGrassPasses; i++)
-	//	{
-	//		cBufferSceneCPU->grassHeight = (grassLength / numGrassPasses) * i;
-	//		mapCbuffer(context, cBufferSceneCPU, cBufferSceneGPU, sizeof(CBufferScene));
-	//		grass->render(context);
-	//	}
-	//}
-	//
-	//if (tree0)
-	//	tree0->render(context);
-	//
-	//if (tree1)
-	//	tree1->render(context);
-	//
-	//if (tree2)
-	//	tree2->render(context);
-	//
-	//if (fire)
-	//	fire->render(context);
-	//
-	//if (smoke)
-	//	smoke->render(context);
+	if (castle)
+		castle->render(context);
+	
+	if (grass)
+	{
+		for (int i = 0; i < numGrassPasses; i++)
+		{
+			cBufferSceneCPU->grassHeight = (grassLength / numGrassPasses) * i;
+			mapCbuffer(context, cBufferSceneCPU, cBufferSceneGPU, sizeof(CBufferScene));
+			grass->render(context);
+		}
+	}
+	
+	if (tree0)
+		tree0->render(context);
+	
+	if (tree1)
+		tree1->render(context);
+	
+	if (tree2)
+		tree2->render(context);
+	
+	if (fire)
+		fire->render(context);
+	
+	if (smoke)
+		smoke->render(context);
 
 	DrawFlare(context);
 

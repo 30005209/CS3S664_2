@@ -7,12 +7,8 @@
 
 
 using namespace std;
-using namespace DirectX;
+//using namespact DirectX;
 using namespace DirectX::PackedVector;
-
-
-
-
 
 Quad::Quad(ID3D11Device *device, ID3D11InputLayout	*_inputLayout) {
 

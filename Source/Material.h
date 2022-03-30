@@ -1,6 +1,6 @@
 #pragma once
 #include <CBufferStructures.h>
-using namespace DirectX;
+//using namespace DirectX;
 using namespace DirectX::PackedVector;
 
 //class 	Effect;

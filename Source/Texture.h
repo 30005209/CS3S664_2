@@ -17,6 +17,7 @@ public:
 
 	Texture(ID3D11Device *device, const std::wstring& filename);
 	ID3D11ShaderResourceView *getShaderResourceView(){ return SRV; };
+	ID3D11Texture2D* getTexture() { return texture; };
 	~Texture();
 };
 

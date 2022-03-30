@@ -108,6 +108,7 @@
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\stdafx.h" />
     <ClInclude Include="Source\targetver.h" />
+    <ClInclude Include="Source\Terrain.h" />
     <ClInclude Include="Source\Texture.h" />
     <ClInclude Include="Source\Triangle.h" />
     <ClInclude Include="Source\Utils.h" />
@@ -137,6 +138,7 @@
     <ClCompile Include="Source\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Source\Terrain.cpp" />
     <ClCompile Include="Source\Texture.cpp" />
     <ClCompile Include="Source\Triangle.cpp" />
     <ClCompile Include="Source\Utils.cpp" />

@@ -17,6 +17,7 @@
 #include "ParticleSystem.h"
 #include <Flare.h>
 #include "BlurUtility.h"
+#include "Terrain.h"
 
 class Scene{// : public GUObject {
 
@@ -36,6 +37,8 @@ class Scene{// : public GUObject {
 	ID3D11Buffer *cBufferLightGPU = nullptr;
 
 	// Add Textures to the scene
+	Texture *heightMap = nullptr;
+	Texture *normalMap = nullptr;
 	Texture *cubeDayTexture = nullptr;
 	Texture *brickTexture = nullptr;
 	Texture *waterNormalTexture = nullptr;
@@ -80,7 +83,8 @@ class Scene{// : public GUObject {
 	Triangle	*triangle = nullptr; //pointer to a Triangle the actual triangle is created in initialiseSceneResources
 	Box			*box = nullptr; 
 	Grid		*water = nullptr;
-	Grid		*grass = nullptr;
+	//Grid		*grass = nullptr;
+	Terrain		*grass = nullptr;
 	Model		*castle = nullptr;
 	Model		*orb = nullptr;
 	Model		*orb2 = nullptr;

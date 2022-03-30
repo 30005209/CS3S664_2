@@ -111,14 +111,15 @@ HRESULT Scene::initialiseSceneResources() {
 
 	//FLARE
 	ID3D11BlendState* flareBlendState = flareEffect->getBlendState();
-	D3D11_BLEND_DESC blendDesc;
-	flareBlendState->GetDesc(&blendDesc);
-	blendDesc.AlphaToCoverageEnable = FALSE;
-	blendDesc.RenderTarget[0].BlendEnable = TRUE;
-	blendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_ONE;
-	blendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_ONE;
+	D3D11_BLEND_DESC flareBSDesc;
+	flareBlendState->GetDesc(&flareBSDesc);
+	flareBSDesc.AlphaToCoverageEnable = FALSE;
+	flareBSDesc.RenderTarget[0].BlendEnable = TRUE;
+	flareBSDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_ONE;
+	flareBSDesc.RenderTarget[0].DestBlend = D3D11_BLEND_ONE;
 	// Create custom flare blend state object
-	flareBlendState->Release(); device->CreateBlendState(&blendDesc, &flareBlendState);
+	flareBlendState->Release(); 
+	device->CreateBlendState(&flareBSDesc, &flareBlendState);
 	flareEffect->setBlendState(flareBlendState);
 
 	// The Effect class constructor sets default depth/stencil, rasteriser and blend states
@@ -332,6 +333,11 @@ HRESULT Scene::updateScene(ID3D11DeviceContext *context,Camera *camera) {
 	//shark->setWorldMatrix(shark->getWorldMatrix() * XMMatrixRotationZ(dT));
 	shark->update(context);
 
+	//OBJ->setWorldMatrix(OBJ->getWorldMatrix() * XMMatrixTranslation(0, 0,0));
+
+	orb2->setWorldMatrix(orb2->getWorldMatrix() * XMMatrixTranslation(0, gT * 0.01f,0) * XMMatrixRotationY(-gT/ 2.0f));
+
+
 	// Update the scene time as it is needed to animate the water
 	cBufferSceneCPU->Time = gT;
 	mapCbuffer(context, cBufferSceneCPU, cBufferSceneGPU, sizeof(CBufferScene));
@@ -364,7 +370,10 @@ HRESULT Scene::renderScene() {
 		orb->render(context);
 	// Render orb2
 	if (orb2)
+	{
+		glow->blurModel(orb2, system->getDepthStencilSRV());
 		orb2->render(context);
+	}
 
 	if (shark)
 		shark->render(context);
@@ -660,6 +669,9 @@ Scene::~Scene() {
 	if (fire)
 		delete(fire);
 
+	if (smoke)
+		delete(smoke);
+
 	if (mainClock)
 		delete(mainClock);
 	if (mainCamera)
@@ -667,6 +679,16 @@ Scene::~Scene() {
 	
 	if (system)
 		delete(system);
+
+	if (flares)
+	{
+		for (int i = 0; i < numFlares; i++)
+		{
+			delete flares[i];
+		}
+
+	}
+
 
 	if (wndHandle)
 		DestroyWindow(wndHandle);

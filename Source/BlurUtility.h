@@ -1,6 +1,7 @@
 #pragma once
 #include <CBufferStructures.h>
 #include "Model.h"
+
 class Model;
 class Quad;
 class Effect;

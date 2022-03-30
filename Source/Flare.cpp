@@ -56,7 +56,7 @@ void Flare::render(ID3D11DeviceContext *context)
 	}
 
 	// Set vertex layout
-	context->IASetInputLayout(inputLayout);
+	//context->IASetInputLayout(inputLayout);
 	
 	// Set vertex and index buffers for IA
 	ID3D11Buffer* vertexBuffers[] = { vertexBuffer };

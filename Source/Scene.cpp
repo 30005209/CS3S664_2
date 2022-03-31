@@ -193,10 +193,10 @@ HRESULT Scene::initialiseSceneResources() {
 
 	// Create an orb model 
 	// The Model class is also derived from the BaseModel class 
-	orb = new Model(device, wstring(L"Resources\\Models\\sphere.3ds"), reflectionMappingEffect, NULL, 0, skyBoxTextureArray, 1);
+	orb0 = new Model(device, wstring(L"Resources\\Models\\sphere.3ds"), reflectionMappingEffect, NULL, 0, skyBoxTextureArray, 1);
 	// Add code here scale the orb
-	orb->setWorldMatrix(XMMatrixScaling(2.0, 2.0, 2.0));
-	orb->update(context);
+	orb0->setWorldMatrix(XMMatrixScaling(2.0, 2.0, 2.0) * XMMatrixTranslation(-8, 0, 0));
+	orb0->update(context);
 	
 
 	Material glossRed(XMCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
@@ -204,23 +204,25 @@ HRESULT Scene::initialiseSceneResources() {
 	Material matWhite;
 	matWhite.setSpecular(XMCOLOR(0.2f, 0.2f, 0.2f, 0.01f));
 	Material*matWhiteArray[]{ &matWhite };
-
-	orb2 = new Model(device, wstring(L"Resources\\Models\\sphere.3ds"), perPixelLightingEffect,matWhiteArray, 1, brickTextureArray, 1);
-	orb2->setWorldMatrix(XMMatrixScaling(0.5, 0.5, 0.5)*XMMatrixTranslation(3, 0, 0));
+	
+	orb2 = new Model(device, wstring(L"Resources\\Models\\sphere.3ds"), perPixelLightingEffect, matWhiteArray, 1, brickTextureArray, 1);
+	orb2->setWorldMatrix(XMMatrixScaling(0.5, 0.5, 0.5)* XMMatrixTranslation(-8, 3, 0));
+	orb2->setWorldMatrix(XMMatrixRotationZ(10));
 	orb2->update(context);
 
-	shark = new Model(device, wstring(L"Resources\\Models\\shark.obj"), perPixelLightingEffect, matWhiteArray, 1, sharkTextureArray, 1);
-	shark->setWorldMatrix(XMMatrixScaling(0.25, 0.25, 0.25) * XMMatrixTranslation(25, -0.75, 10));
+	orb1 = new Model(device, wstring(L"Resources\\Models\\sphere.3ds"), perPixelLightingEffect,matWhiteArray, 1, brickTextureArray, 1);
+	orb1->setWorldMatrix(XMMatrixScaling(0.5, 0.5, 0.5)*XMMatrixTranslation(-8, 3, 0));
+	orb1->update(context);
+
+	shark = new Model(device, wstring(L"Resources\\Models\\shark.obj"), treeEffect, matWhiteArray, 1, sharkTextureArray, 1);
+	shark->setWorldMatrix(XMMatrixScaling(0.25, 0.25, 0.25) * XMMatrixTranslation(-5, -0.75f, 0));
 	shark->update(context);
 
 	castle = new Model(device, wstring(L"Resources\\Models\\castle.3DS"), perPixelLightingEffect, matWhiteArray, 1, castleTextureArray, 1);
-	castle->setWorldMatrix(XMMatrixScaling(10.0f, 10.0f, 10.0f) * XMMatrixTranslation(10, 0, 10));
+	castle->setWorldMatrix(XMMatrixRotationY(90) * XMMatrixScaling(10.0f, 10.0f, 10.0f) * XMMatrixTranslation(-10, 0, 20));
 	castle->update(context);
 
-	// Water init - final int is number of textures
-	water = new Grid(20, 20, device, waterEffect, matWhiteArray, 1, waterTextureArray, 2);
-	water->setWorldMatrix(XMMatrixScaling(5, 5, 5) * XMMatrixTranslation(-10, 0, 0));
-	water->update(context);
+
 		
 	//OLD Grid based Grass
 	//grass = new Grid(20, 20, device, grassEffect, matWhiteArray, 1, grassTextureArray, 2);
@@ -228,10 +230,13 @@ HRESULT Scene::initialiseSceneResources() {
 	//grass->update(context);
 
 	grass = new Terrain(device, context, 100, 100, heightMap->getTexture(), normalMap->getTexture(), grassEffect, matWhiteArray, 1, grassTextureArray, 2);
-	grass->setWorldMatrix(XMMatrixTranslation(-50.0f,0.0f,-50.0f));
+	grass->setWorldMatrix(XMMatrixScaling(1, 2, 1) *XMMatrixTranslation(-50.0f,0.0f,-50.0f));
 	grass->update(context);
 
-
+	// Water init - final int is number of textures
+	water = new Grid(32, 30, device, waterEffect, matWhiteArray, 1, waterTextureArray, 2);
+	water->setWorldMatrix(XMMatrixScaling(1, 1, 1)* XMMatrixTranslation(-25, grass->CalculateYValueWorld(5, 5)+.01f, -15));
+	water->update(context);
 
 	tree0 = new Model(device, wstring(L"Resources\\Models\\tree.3DS"), treeEffect, matWhiteArray, 1, treeTextureArray, 1);
 	tree0->setWorldMatrix(XMMatrixTranslation(10, grass->CalculateYValueWorld(10, 10), 10));
@@ -330,6 +335,14 @@ HRESULT Scene::updateScene(ID3D11DeviceContext *context,Camera *camera) {
 
 	// mainClock is a helper class to manage game time data
 	mainClock->tick();
+	static float timer = 5.0f;
+	timer -= mainClock->gameTimeDelta();
+	if (timer < 0)
+	{
+		cout << "Average FPS: " << mainClock->averageFPS() << endl;
+		cout << "Average SPF: " << mainClock->averageSPF() << endl;
+		timer = 5.0f;
+	}
 	double dT = mainClock->gameTimeDelta();
 	double gT = mainClock->gameTimeElapsed();
 	//cout << "Game time Elapsed= " << gT << " seconds" << endl;
@@ -337,17 +350,20 @@ HRESULT Scene::updateScene(ID3D11DeviceContext *context,Camera *camera) {
 	// If the CPU CBuffer contents are changed then the changes need to be copied to GPU CBuffer with the mapCbuffer helper function
 	mainCamera->update(context);
 
-	orb2->setWorldMatrix(orb2->getWorldMatrix()* XMMatrixRotationZ((float)dT));
+	orb1->setWorldMatrix(orb1->getWorldMatrix() * XMMatrixRotationZ((float)dT));
+	orb1->update(context);
+
+	orb2->setWorldMatrix(orb2->getWorldMatrix()* XMMatrixRotationX((float)dT));
 	orb2->update(context);
 	
 	water->update(context);
-
-	//shark->setWorldMatrix(shark->getWorldMatrix() * XMMatrixRotationZ(dT));
+	
+	shark->setWorldMatrix(shark->getWorldMatrix() * XMMatrixRotationY(dT / 2.0f));
 	shark->update(context);
 
 	//OBJ->setWorldMatrix(OBJ->getWorldMatrix() * XMMatrixTranslation(0, 0,0));
 
-	orb2->setWorldMatrix(orb2->getWorldMatrix() * XMMatrixTranslation(0.0f, (float)gT * 0.01f, 0.0f) * XMMatrixRotationY((float)-gT/ 2.0f));
+	//goat->setWorldMatrix(goat->getWorldMatrix() * XMMatrixTranslation(0.0f, (float)gT * 0.01f, 0.0f) * XMMatrixRotationY((float)-gT/ 2.0f));
 
 
 	// Update the scene time as it is needed to animate the water
@@ -377,24 +393,32 @@ HRESULT Scene::renderScene() {
 	if (box)
 		box->render(context);
 	
-	//// Render orb
-	//if (orb)
-	//	orb->render(context);
-	//// Render orb2
-	//if (orb2)
-	//{
-	//	glow->blurModel(orb2, system->getDepthStencilSRV());
-	//	orb2->render(context);
-	//}
-
-	//if (shark)
-	//	shark->render(context);
+	// Render orb
+	if (orb0)
+	{
+		orb0->render(context);
+	}
+	
+	if (orb1)
+	{
+		glow->blurModel(orb1, system->getDepthStencilSRV());
+		orb1->render(context);
+	}
+	
+	// Render goat
+	if (orb2)
+	{
+		orb2->render(context);
+	}
+	
+	if (shark)
+		shark->render(context);
 
 	if (water)
 		water->render(context);
 	
-	//if (castle)
-	//	castle->render(context);
+	if (castle)
+		castle->render(context);
 	
 	if (grass)
 	{
@@ -690,8 +714,10 @@ Scene::~Scene() {
 
 	if (box)
 		delete(box);
-	if (orb)
-		delete(orb);
+	if (orb0)
+		delete(orb0);
+	if (orb1)
+		delete(orb1);
 	if (orb2)
 		delete(orb2);
 	if (shark)

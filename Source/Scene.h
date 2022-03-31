@@ -86,7 +86,8 @@ class Scene{// : public GUObject {
 	//Grid		*grass = nullptr;
 	Terrain		*grass = nullptr;
 	Model		*castle = nullptr;
-	Model		*orb = nullptr;
+	Model		*orb0 = nullptr;
+	Model		*orb1 = nullptr;
 	Model		*orb2 = nullptr;
 	Model		*shark = nullptr;
 

@@ -199,10 +199,10 @@ HRESULT Scene::initialiseSceneResources() {
 	orb->update(context);
 	
 
-	Material glossRed(XMCOLOR(1.0, 0.0, 0.0, 1.0));
+	Material glossRed(XMCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
 	Material*glossRedMaterialArray[]{ &glossRed };
 	Material matWhite;
-	matWhite.setSpecular(XMCOLOR(0.2, 0.2, 0.2, 0.01));
+	matWhite.setSpecular(XMCOLOR(0.2f, 0.2f, 0.2f, 0.01f));
 	Material*matWhiteArray[]{ &matWhite };
 
 	orb2 = new Model(device, wstring(L"Resources\\Models\\sphere.3ds"), perPixelLightingEffect,matWhiteArray, 1, brickTextureArray, 1);
@@ -222,28 +222,28 @@ HRESULT Scene::initialiseSceneResources() {
 	water->setWorldMatrix(XMMatrixScaling(5, 5, 5) * XMMatrixTranslation(-10, 0, 0));
 	water->update(context);
 		
+	//OLD Grid based Grass
 	//grass = new Grid(20, 20, device, grassEffect, matWhiteArray, 1, grassTextureArray, 2);
 	//grass->setWorldMatrix(XMMatrixScaling(5, 5, 5) * XMMatrixTranslation(-10, 0, 0));
 	//grass->update(context);
 
 	grass = new Terrain(device, context, 100, 100, heightMap->getTexture(), normalMap->getTexture(), grassEffect, matWhiteArray, 1, grassTextureArray, 2);
-	grass->setWorldMatrix(XMMatrixTranslation(-50, -0.01, -50));
+	grass->setWorldMatrix(XMMatrixTranslation(-50.0f,0.0f,-50.0f));
 	grass->update(context);
+
+
 
 	tree0 = new Model(device, wstring(L"Resources\\Models\\tree.3DS"), treeEffect, matWhiteArray, 1, treeTextureArray, 1);
 	tree0->setWorldMatrix(XMMatrixTranslation(10, grass->CalculateYValueWorld(10, 10), 10));
-	//tree0->setWorldMatrix(XMMatrixScaling(1.0f, 1.0f, 1.0f) * XMMatrixTranslation(0, 0, 0));
 	tree0->update(context); 
 
 
 	tree1 = new Model(device, wstring(L"Resources\\Models\\tree.3DS"), treeEffect, matWhiteArray, 1, treeTextureArray, 1);
 	tree1->setWorldMatrix(XMMatrixTranslation(50, grass->CalculateYValueWorld(10, 10), 10));
-	//tree1->setWorldMatrix(XMMatrixScaling(1.0f, 1.0f, 1.0f) * XMMatrixTranslation(4, 0, 15));
 	tree1->update(context);
 
 	tree2 = new Model(device, wstring(L"Resources\\Models\\tree.3DS"), treeEffect, matWhiteArray, 1, treeTextureArray, 1);
 	tree2->setWorldMatrix(XMMatrixTranslation(20, grass->CalculateYValueWorld(10, 10), 50));
-	//tree2->setWorldMatrix(XMMatrixScaling(1.0f, 1.0f, 1.0f) * XMMatrixTranslation(15, 0, 15));
 	tree2->update(context);
 
 	fire = new ParticleSystem(device, fireEffect, matWhiteArray, 1, fireTextureArray, 1);
@@ -253,9 +253,9 @@ HRESULT Scene::initialiseSceneResources() {
 	for (int i = 0; i < numFlares; i++)
 	{
 		if (randM1P1() > 0)
-			flares[i] = new Flare(XMFLOAT3(-125.0, 60.0, 70.0), XMCOLOR(randM1P1() * 0.5 + 0.5, randM1P1() * 0.5 + 0.5, randM1P1() * 0.5 + 0.5, (float)i / numFlares), device, flareEffect, NULL, 0, flare1TextureArray, 1);
+			flares[i] = new Flare(XMFLOAT3(-125.0f, 60.0f, 70.0f), XMCOLOR(randM1P1() * 0.5f + 0.5f, randM1P1() * 0.5f + 0.5f, randM1P1() * 0.5f + 0.5f, (float)i / numFlares), device, flareEffect, NULL, 0, flare1TextureArray, 1);
 		else
-			flares[i] = new Flare(XMFLOAT3(-125.0, 60.0, 70.0), XMCOLOR(randM1P1() * 0.5 + 0.5, randM1P1() * 0.5 + 0.5, randM1P1() * 0.5 + 0.5, (float)i / numFlares), device, flareEffect, NULL, 0, flare2TextureArray, 1);
+			flares[i] = new Flare(XMFLOAT3(-125.0f, 60.0f, 70.0f), XMCOLOR(randM1P1() * 0.5f + 0.5f, randM1P1() * 0.5f + 0.5f, randM1P1() * 0.5f + 0.5f, (float)i / numFlares), device, flareEffect, NULL, 0, flare2TextureArray, 1);
 	}
 
 
@@ -275,10 +275,10 @@ HRESULT Scene::initialiseSceneResources() {
 	cBufferLightCPU = (CBufferLight *)_aligned_malloc(sizeof(CBufferLight), 16);
 
 	// Fill out cBufferLightCPU
-	cBufferLightCPU->lightVec = DirectX::XMFLOAT4(-5.0, 2.0, 5.0, 1.0);
-	cBufferLightCPU->lightAmbient = DirectX::XMFLOAT4(0.2, 0.2, 0.2, 1.0);
-	cBufferLightCPU->lightDiffuse = DirectX::XMFLOAT4(0.7, 0.7, 0.7, 1.0);
-	cBufferLightCPU->lightSpecular = DirectX::XMFLOAT4(1.0, 1.0, 1.0, 1.0);
+	cBufferLightCPU->lightVec = DirectX::XMFLOAT4(-5.0f, 2.0f, 5.0f, 1.0f);
+	cBufferLightCPU->lightAmbient = DirectX::XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);
+	cBufferLightCPU->lightDiffuse = DirectX::XMFLOAT4(0.7f, 0.7f, 0.7f, 1.0f);
+	cBufferLightCPU->lightSpecular = DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 
 	// Create GPU resource memory copy of cBufferLight
 	// fill out description (Note if we want to update the CBuffer we need  D3D11_CPU_ACCESS_WRITE)
@@ -337,7 +337,7 @@ HRESULT Scene::updateScene(ID3D11DeviceContext *context,Camera *camera) {
 	// If the CPU CBuffer contents are changed then the changes need to be copied to GPU CBuffer with the mapCbuffer helper function
 	mainCamera->update(context);
 
-	orb2->setWorldMatrix(orb2->getWorldMatrix()* XMMatrixRotationZ(dT));
+	orb2->setWorldMatrix(orb2->getWorldMatrix()* XMMatrixRotationZ((float)dT));
 	orb2->update(context);
 	
 	water->update(context);
@@ -347,11 +347,11 @@ HRESULT Scene::updateScene(ID3D11DeviceContext *context,Camera *camera) {
 
 	//OBJ->setWorldMatrix(OBJ->getWorldMatrix() * XMMatrixTranslation(0, 0,0));
 
-	orb2->setWorldMatrix(orb2->getWorldMatrix() * XMMatrixTranslation(0, gT * 0.01f,0) * XMMatrixRotationY(-gT/ 2.0f));
+	orb2->setWorldMatrix(orb2->getWorldMatrix() * XMMatrixTranslation(0.0f, (float)gT * 0.01f, 0.0f) * XMMatrixRotationY((float)-gT/ 2.0f));
 
 
 	// Update the scene time as it is needed to animate the water
-	cBufferSceneCPU->Time = gT;
+	cBufferSceneCPU->Time = (float)gT;
 	mapCbuffer(context, cBufferSceneCPU, cBufferSceneGPU, sizeof(CBufferScene));
 	
 	return S_OK;
@@ -423,8 +423,6 @@ HRESULT Scene::renderScene() {
 
 	DrawFlare(context);
 
-
-
 	// Present current frame to the screen
 	HRESULT hr = system->presentBackBuffer();
 
@@ -456,7 +454,7 @@ void Scene::handleMouseWheel(const short zDelta) {
 	//	mainCamera->zoomCamera(0.9f);
 	//cout << "zoom" << endl;
 	//FirstPersonCamera
-	mainCamera->move(zDelta*0.01);
+	mainCamera->move(zDelta*0.01f);
 }
 
 // Process key down event.  keyCode indicates the key pressed while extKeyFlags indicates the extended key status at the time of the key down event (see http://msdn.microsoft.com/en-gb/library/windows/desktop/ms646280%28v=vs.85%29.aspx).
@@ -632,14 +630,7 @@ Scene::~Scene() {
 		cBufferSceneGPU->Release();
 	if (cBufferLightGPU)
 		cBufferLightGPU->Release();
-
 	
-	// Delete Scene Textures
-	if (cubeDayTexture)
-		delete(cubeDayTexture);
-	if (brickTexture)
-		delete(brickTexture);
-
 	// Delete Scene Effects
 	if (basicColourEffect)
 		delete(basicColourEffect);
@@ -651,6 +642,48 @@ Scene::~Scene() {
 		delete(skyBoxEffect);
 	if (reflectionMappingEffect)
 		delete(reflectionMappingEffect);
+	if (waterEffect)
+		delete waterEffect;
+	if (grassEffect)
+		delete grassEffect;
+	if (treeEffect)
+		delete treeEffect;
+	if (fireEffect)
+		delete fireEffect;
+	if (smokeEffect)
+		delete smokeEffect;
+	if (flareEffect)
+		delete flareEffect;
+
+	// Delete Textures
+	if (heightMap)
+		delete heightMap;
+	if (normalMap)
+		delete normalMap;
+	if (cubeDayTexture)
+		delete cubeDayTexture;
+	if (waterNormalTexture)
+		delete waterNormalTexture;
+	if (sharkTexture)
+		delete sharkTexture;
+	if (castleTexture)
+		delete castleTexture;
+	if (grassAlphaTexture)
+		delete grassAlphaTexture;
+	if (grassDiffTexture)
+		delete grassDiffTexture;
+	if (treeTexture)
+		delete treeTexture;
+	if (brickTexture)
+		delete brickTexture;
+	if (fireTexture)
+		delete fireTexture;
+	if (smokeTexture)
+		delete smokeTexture;
+	if (flare1Texture)
+		delete flare1Texture;
+	if (flare2Texture)
+		delete flare2Texture;
 
 
 	// Delete Scene objects
@@ -661,46 +694,24 @@ Scene::~Scene() {
 		delete(orb);
 	if (orb2)
 		delete(orb2);
-
-	if (water)
-		delete(water);
-
-	if (grass)
-		delete(grass);
-
-	if(tree0)
-		delete(tree0);
-
-	if(tree1)
-		delete(tree1);
-
-	if (tree2)
-		delete(tree2);
-
+	if (shark)
+		delete(shark);
 	if (castle)
 		delete(castle);
-
+	if (water)
+		delete(water);
+	if (grass)
+		delete(grass);
+	if(tree0)
+		delete(tree0);
+	if(tree1)
+		delete(tree1);
+	if (tree2)
+		delete(tree2);
 	if (fire)
 		delete(fire);
-
 	if (smoke)
 		delete(smoke);
-
-	if (mainClock)
-		delete(mainClock);
-
-	if (mainCamera)
-		delete(mainCamera);
-	
-	if (system)
-		delete(system);
-
-	if (heightMap)
-		delete heightMap;
-
-	if (normalMap)
-		delete normalMap;
-
 	if (flares)
 	{
 		for (int i = 0; i < numFlares; i++)
@@ -708,9 +719,14 @@ Scene::~Scene() {
 			delete flares[i];
 		}
 	}
-
 	if (glow)
 		delete glow;
+	if (mainClock)
+		delete(mainClock);
+	if (mainCamera)
+		delete(mainCamera);	
+	if (system)
+		delete(system);
 
 	if (wndHandle)
 		DestroyWindow(wndHandle);

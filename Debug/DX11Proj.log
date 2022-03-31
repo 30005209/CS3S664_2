@@ -1,17 +1,66 @@
-﻿  Scene.cpp
-D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(205,50): warning C4305: 'argument': truncation from 'double' to 'float'
-D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(230,59): warning C4305: 'argument': truncation from 'double' to 'float'
-D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(256,129): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(256,105): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(256,81): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(258,129): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(258,105): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(258,81): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(279,70): warning C4305: 'argument': truncation from 'double' to 'float'
-D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(280,70): warning C4305: 'argument': truncation from 'double' to 'float'
-D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(340,65): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(350,74): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(350,108): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(354,26): warning C4244: '=': conversion from 'double' to 'FLOAT', possible loss of data
-D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(459,25): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  DX11Proj.vcxproj -> D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Debug\DX11Proj.exe
+﻿  compilation object save succeeded; see Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\cso\basic_colour_ps.cso
+  compilation object save succeeded; see Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\cso\basic_colour_vs.cso
+Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\hlsl\basic_lighting_vs.hlsl(35,23-54): warning X3578: Output value 'main' is not completely initialized
+  
+  compilation object save succeeded; see Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\cso\basic_lighting_vs.cso
+  compilation object save succeeded; see Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\cso\basic_texture_ps.cso
+  compilation object save succeeded; see Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\cso\basic_texture_vs.cso
+  compilation object save succeeded; see Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\cso\convolve_u_ps.cso
+  compilation object save succeeded; see Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\cso\convolve_v_ps.cso
+Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\hlsl\copy_depth_ps.hlsl(36,20-120): warning X3206: 'Load': implicit truncation of vector type
+  
+  compilation object save succeeded; see Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\cso\copy_depth_ps.cso
+  compilation object save succeeded; see Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\cso\copy_ps.cso
+  compilation object save succeeded; see Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\cso\emissive_ps.cso
+  compilation object save succeeded; see Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\cso\fire_ps.cso
+Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\hlsl\fire_vs.hlsl(79,26-37): warning X3206: implicit truncation of vector type
+  
+  compilation object save succeeded; see Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\cso\fire_vs.cso
+  compilation object save succeeded; see Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\cso\flare_ps.cso
+Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\hlsl\flare_vs.hlsl(51,12-60): warning X3206: 'Load': implicit truncation of vector type
+  
+  compilation object save succeeded; see Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\cso\flare_vs.cso
+Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\hlsl\grass_ps.hlsl(99,22-93): warning X3206: implicit truncation of vector type
+Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\hlsl\grass_ps.hlsl(111,18-42): warning X3206: implicit truncation of vector type
+Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\hlsl\grass_ps.hlsl(117,12-66): warning X3206: implicit truncation of vector type
+Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\hlsl\grass_ps.hlsl(135,8-35): warning X3206: implicit truncation of vector type
+  
+  compilation object save succeeded; see Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\cso\grass_ps.cso
+  compilation object save succeeded; see Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\cso\grass_vs.cso
+  compilation object save succeeded; see Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\cso\ocean_ps.cso
+Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\hlsl\ocean_vs.hlsl(157,15-25): warning X3206: implicit truncation of vector type
+  
+  compilation object save succeeded; see Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\cso\ocean_vs.cso
+Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\hlsl\per_pixel_lighting_ps.hlsl(84,18-45): warning X3206: implicit truncation of vector type
+Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\hlsl\per_pixel_lighting_ps.hlsl(91,12-69): warning X3206: implicit truncation of vector type
+Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\hlsl\per_pixel_lighting_ps.hlsl(96,28-42): warning X3206: implicit truncation of vector type
+Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\hlsl\per_pixel_lighting_ps.hlsl(101,12-57): warning X3206: implicit truncation of vector type
+  
+  compilation object save succeeded; see Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\cso\per_pixel_lighting_ps.cso
+Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\hlsl\per_pixel_lighting_vs.hlsl(65,2-68): warning X3206: implicit truncation of vector type
+  
+  compilation object save succeeded; see Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\cso\per_pixel_lighting_vs.cso
+Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\hlsl\reflection_map_ps.hlsl(93,23-50): warning X3206: implicit truncation of vector type
+Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\hlsl\reflection_map_ps.hlsl(101,17-75): warning X3206: implicit truncation of vector type
+Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\hlsl\reflection_map_ps.hlsl(109,28-42): warning X3206: implicit truncation of vector type
+  
+  compilation object save succeeded; see Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\cso\reflection_map_ps.cso
+  compilation object save succeeded; see Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\cso\reflection_map_vs.cso
+Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\hlsl\screen_quad_vs.hlsl(27,2-54): warning X3206: implicit truncation of vector type
+  
+  compilation object save succeeded; see Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\cso\screen_quad_vs.cso
+  compilation object save succeeded; see Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\cso\sky_box_ps.cso
+  compilation object save succeeded; see Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\cso\sky_box_vs.cso
+Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\hlsl\tree_ps.hlsl(92,18-45): warning X3206: implicit truncation of vector type
+Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\hlsl\tree_ps.hlsl(100,12-69): warning X3206: implicit truncation of vector type
+Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\hlsl\tree_ps.hlsl(104,28-42): warning X3206: implicit truncation of vector type
+Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\hlsl\tree_ps.hlsl(107,12-57): warning X3206: implicit truncation of vector type
+  
+  compilation object save succeeded; see Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\cso\tree_ps.cso
+  compilation object save succeeded; see Y:\Documents\Year 3\Graphics2\CS3S664_2\Shaders\cso\tree_vs.cso
+  Scene.cpp
+Y:\Documents\Year 3\Graphics2\CS3S664_2\Source\Scene.cpp(339,37): warning C4244: '-=': conversion from 'gu_seconds' to 'float', possible loss of data
+Y:\Documents\Year 3\Graphics2\CS3S664_2\Source\Scene.cpp(361,71): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  main.cpp
+  Generating Code...
+  DX11Proj.vcxproj -> Y:\Documents\Year 3\Graphics2\CS3S664_2\Debug\DX11Proj.exe

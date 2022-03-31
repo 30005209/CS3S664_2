@@ -86,12 +86,16 @@ class Scene{// : public GUObject {
 	//Grid		*grass = nullptr;
 	Terrain		*grass = nullptr;
 	Model		*castle = nullptr;
-	Model		*orb = nullptr;
+	Model		*orb0 = nullptr;
+	Model		*orb1 = nullptr;
 	Model		*orb2 = nullptr;
 	Model		*shark = nullptr;
-	Model		*tree0 = nullptr;
-	Model		*tree1 = nullptr;
-	Model		*tree2 = nullptr;
+
+
+	//Trees
+	Model* tree0 = nullptr;
+	Model* tree1 = nullptr;
+	Model* tree2 = nullptr;
 
 	// Grass
 	float grassLength = 0.01f;
@@ -135,7 +139,7 @@ public:
 
 	//Flares
 	void DrawFlare(ID3D11DeviceContext* context);
-
+	
 	// Destructor
 	~Scene();
 	// Decouple the encapsulated HWND and call DestoryWindow on the HWND

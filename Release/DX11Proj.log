@@ -1,0 +1,20 @@
+﻿  Animation.cpp
+D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Animation.cpp(67,93): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  BaseModel.cpp
+  BlurUtility.cpp
+D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\BlurUtility.cpp(133,40): warning C4244: '=': conversion from 'FLOAT' to 'INT', possible loss of data
+D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\BlurUtility.cpp(134,41): warning C4244: '=': conversion from 'FLOAT' to 'INT', possible loss of data
+D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\BlurUtility.cpp(149,51): warning C4305: 'argument': truncation from 'double' to 'float'
+D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\BlurUtility.cpp(157,48): warning C4244: '=': conversion from 'FLOAT' to 'INT', possible loss of data
+D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\BlurUtility.cpp(158,49): warning C4244: '=': conversion from 'FLOAT' to 'INT', possible loss of data
+D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\BlurUtility.cpp(231,28): warning C4244: '=': conversion from 'int' to 'FLOAT', possible loss of data
+D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\BlurUtility.cpp(232,29): warning C4244: '=': conversion from 'int' to 'FLOAT', possible loss of data
+  Box.cpp
+  CGDClock.cpp
+  CGDConsole.cpp
+  Camera.cpp
+D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Camera.cpp(21,79): warning C4305: 'argument': truncation from 'double' to 'float'
+  Generating Code...
+D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\BlurUtility.cpp(312): warning C4715: 'BlurUtility::setupBlurRenderTargets': not all control paths return a value
+  LINK : D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Debug\DX11Proj.exe not found or not built by the last incremental link; performing full link
+  DX11Proj.vcxproj -> D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Debug\DX11Proj.exe

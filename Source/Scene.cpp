@@ -1,4 +1,5 @@
 
+
 //
 // Scene.cpp
 //
@@ -89,10 +90,9 @@ HRESULT Scene::initialiseSceneResources() {
 	treeEffect->setBlendState(foilageBSState);
 
 	// FIRE
-	ID3D11BlendState* fireBSState = grassEffect->getBlendState();
+	ID3D11BlendState* fireBSState = fireEffect->getBlendState();
 	D3D11_BLEND_DESC fireBSDesc;
 	fireBSState->GetDesc(&fireBSDesc);
-
 	fireBSDesc.RenderTarget[0].BlendEnable = TRUE;
 	fireBSDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
 	fireBSDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
@@ -150,6 +150,7 @@ HRESULT Scene::initialiseSceneResources() {
 	treeTexture = new Texture(device, L"Resources\\Textures\\tree.tif");
 
 	brickTexture = new Texture(device, L"Resources\\Textures\\Brick_DIFFUSE.jpg");
+	knightTexture = new Texture(device, L"Resources\\Textures\\knight_orig.jpg");
 
 	//Fire
 	fireTexture = new Texture(device, L"Resources\\Textures\\Fire.tif");
@@ -165,6 +166,7 @@ HRESULT Scene::initialiseSceneResources() {
 	ID3D11ShaderResourceView *skyBoxTextureArray[] = { cubeDayTexture->getShaderResourceView()};
 	ID3D11ShaderResourceView* waterTextureArray[] = { waterNormalTexture->getShaderResourceView(), cubeDayTexture->getShaderResourceView()};
 	ID3D11ShaderResourceView *brickTextureArray[] = { brickTexture->getShaderResourceView() };
+	ID3D11ShaderResourceView* knightTextureArray[] = { knightTexture->getShaderResourceView()};
 	ID3D11ShaderResourceView* sharkTextureArray[] = { sharkTexture->getShaderResourceView() };
 	ID3D11ShaderResourceView* grassTextureArray[] = { grassDiffTexture->getShaderResourceView(), grassAlphaTexture->getShaderResourceView() };
 	ID3D11ShaderResourceView* treeTextureArray[] = { treeTexture->getShaderResourceView() };
@@ -205,14 +207,13 @@ HRESULT Scene::initialiseSceneResources() {
 	matWhite.setSpecular(XMCOLOR(0.2f, 0.2f, 0.2f, 0.01f));
 	Material*matWhiteArray[]{ &matWhite };
 	
-	orb2 = new Model(device, wstring(L"Resources\\Models\\sphere.3ds"), perPixelLightingEffect, matWhiteArray, 1, brickTextureArray, 1);
-	orb2->setWorldMatrix(XMMatrixScaling(0.5, 0.5, 0.5)* XMMatrixTranslation(-8, 3, 0));
-	orb2->setWorldMatrix(XMMatrixRotationZ(10));
-	orb2->update(context);
-
 	orb1 = new Model(device, wstring(L"Resources\\Models\\sphere.3ds"), perPixelLightingEffect,matWhiteArray, 1, brickTextureArray, 1);
 	orb1->setWorldMatrix(XMMatrixScaling(0.5, 0.5, 0.5)*XMMatrixTranslation(-8, 3, 0));
 	orb1->update(context);
+	
+	knight = new Model(device, wstring(L"Resources\\Models\\knight.3ds"), perPixelLightingEffect, matWhiteArray, 1, knightTextureArray, 1);
+	knight->setWorldMatrix(XMMatrixScaling(0.02, 0.02, 0.02)* XMMatrixTranslation(2, -0.75f, 0));
+	knight->update(context);
 
 	shark = new Model(device, wstring(L"Resources\\Models\\shark.obj"), treeEffect, matWhiteArray, 1, sharkTextureArray, 1);
 	shark->setWorldMatrix(XMMatrixScaling(0.25, 0.25, 0.25) * XMMatrixTranslation(-5, -0.75f, 0));
@@ -221,8 +222,6 @@ HRESULT Scene::initialiseSceneResources() {
 	castle = new Model(device, wstring(L"Resources\\Models\\castle.3DS"), perPixelLightingEffect, matWhiteArray, 1, castleTextureArray, 1);
 	castle->setWorldMatrix(XMMatrixRotationY(90) * XMMatrixScaling(10.0f, 10.0f, 10.0f) * XMMatrixTranslation(-10, 0, 20));
 	castle->update(context);
-
-
 		
 	//OLD Grid based Grass
 	//grass = new Grid(20, 20, device, grassEffect, matWhiteArray, 1, grassTextureArray, 2);
@@ -239,19 +238,19 @@ HRESULT Scene::initialiseSceneResources() {
 	water->update(context);
 
 	tree0 = new Model(device, wstring(L"Resources\\Models\\tree.3DS"), treeEffect, matWhiteArray, 1, treeTextureArray, 1);
-	tree0->setWorldMatrix(XMMatrixTranslation(10, grass->CalculateYValueWorld(10, 10), 10));
+	tree0->setWorldMatrix(XMMatrixTranslation(-30, grass->CalculateYValueWorld(-30, 10), 10));
 	tree0->update(context); 
 
-
 	tree1 = new Model(device, wstring(L"Resources\\Models\\tree.3DS"), treeEffect, matWhiteArray, 1, treeTextureArray, 1);
-	tree1->setWorldMatrix(XMMatrixTranslation(50, grass->CalculateYValueWorld(10, 10), 10));
+	tree1->setWorldMatrix(XMMatrixTranslation(-20, grass->CalculateYValueWorld(-20,10), 10));
 	tree1->update(context);
 
 	tree2 = new Model(device, wstring(L"Resources\\Models\\tree.3DS"), treeEffect, matWhiteArray, 1, treeTextureArray, 1);
-	tree2->setWorldMatrix(XMMatrixTranslation(20, grass->CalculateYValueWorld(10, 10), 50));
+	tree2->setWorldMatrix(XMMatrixTranslation(-30, grass->CalculateYValueWorld(-30, 20), 20));
 	tree2->update(context);
-
+	
 	fire = new ParticleSystem(device, fireEffect, matWhiteArray, 1, fireTextureArray, 1);
+	fire->setWorldMatrix(XMMatrixTranslation(10, 1.0f, 0));
 	smoke = new ParticleSystem(device, fireEffect, matWhiteArray, 1, smokeTextureArray, 1);
 
 	// Create Flares
@@ -263,7 +262,6 @@ HRESULT Scene::initialiseSceneResources() {
 			flares[i] = new Flare(XMFLOAT3(-125.0f, 60.0f, 70.0f), XMCOLOR(randM1P1() * 0.5f + 0.5f, randM1P1() * 0.5f + 0.5f, randM1P1() * 0.5f + 0.5f, (float)i / numFlares), device, flareEffect, NULL, 0, flare2TextureArray, 1);
 	}
 
-
 	glow = new BlurUtility(system->getDevice(), context, 256, 256);
 
 
@@ -272,7 +270,8 @@ HRESULT Scene::initialiseSceneResources() {
 	// and and 3 vectors to define the initial position, up vector and target for the camera.
 	// The camera class  manages a Cbuffer containing view/projection matrix properties. It has methods to update the cbuffers if the camera moves changes  
 	// The camera constructor and update methods also attaches the camera CBuffer to the pipeline at slot b1 for vertex and pixel shaders
-	mainCamera = new FirstPersonCamera(device, XMVectorSet(-9.0, 2.0, 17.0,	1.0f), XMVectorSet(0.0f, 1.0f, 0.0f, 1.0f), XMVectorSet(0.8f, 0.0f, -1.0f, 1.0f));
+	mainCamera = new FirstPersonCamera(device, XMVectorSet(15, 2.0, -5.0, 1.0f), XMVectorSet(0.0f, 1.0f, 0.0f, 1.0f), XMVectorSet(0.8f, 0.0f, -1.0f, 1.0f));
+	mainCamera->turn(1.25f);
 	mainCamera->setFlying(false);
 
 	// Add a CBuffer to store light properties - you might consider creating a Light Class to manage this CBuffer
@@ -353,13 +352,19 @@ HRESULT Scene::updateScene(ID3D11DeviceContext *context,Camera *camera) {
 	orb1->setWorldMatrix(orb1->getWorldMatrix() * XMMatrixRotationZ((float)dT));
 	orb1->update(context);
 
-	orb2->setWorldMatrix(orb2->getWorldMatrix()* XMMatrixRotationX((float)dT));
-	orb2->update(context);
+	knight->setWorldMatrix(knight->getWorldMatrix());
+	knight->update(context);
 	
 	water->update(context);
 	
 	shark->setWorldMatrix(shark->getWorldMatrix() * XMMatrixRotationY(dT / 2.0f));
 	shark->update(context);
+
+	fire->update(context);
+
+	tree0->setWorldMatrix(XMMatrixTranslation(10, grass->CalculateYValueWorld(10, 10), 10));
+	tree0->setWorldMatrix(XMMatrixTranslation(50, grass->CalculateYValueWorld(10, 10), 10));
+	tree0->setWorldMatrix(XMMatrixTranslation(20, grass->CalculateYValueWorld(10, 10), 50));
 
 	//OBJ->setWorldMatrix(OBJ->getWorldMatrix() * XMMatrixTranslation(0, 0,0));
 
@@ -406,9 +411,9 @@ HRESULT Scene::renderScene() {
 	}
 	
 	// Render goat
-	if (orb2)
+	if (knight)
 	{
-		orb2->render(context);
+		knight->render(context);
 	}
 	
 	if (shark)
@@ -439,11 +444,11 @@ HRESULT Scene::renderScene() {
 	if (tree2)
 		tree2->render(context);
 	
-	//if (fire)
-	//	fire->render(context);
-	//
-	//if (smoke)
-	//	smoke->render(context);
+	if (fire)
+		fire->render(context);
+	
+	if (smoke)
+		smoke->render(context);
 
 	DrawFlare(context);
 
@@ -700,6 +705,8 @@ Scene::~Scene() {
 		delete treeTexture;
 	if (brickTexture)
 		delete brickTexture;
+	if (knightTexture)
+		delete knightTexture;
 	if (fireTexture)
 		delete fireTexture;
 	if (smokeTexture)
@@ -718,8 +725,8 @@ Scene::~Scene() {
 		delete(orb0);
 	if (orb1)
 		delete(orb1);
-	if (orb2)
-		delete(orb2);
+	if (knight)
+		delete(knight);
 	if (shark)
 		delete(shark);
 	if (castle)

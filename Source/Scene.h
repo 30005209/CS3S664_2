@@ -43,6 +43,7 @@ class Scene{// : public GUObject {
 	Texture *brickTexture = nullptr;
 	Texture *waterNormalTexture = nullptr;
 	Texture *sharkTexture = nullptr;
+	Texture* knightTexture = nullptr;
 
 	Texture *grassAlphaTexture = nullptr;
 	Texture *grassDiffTexture = nullptr;
@@ -88,7 +89,7 @@ class Scene{// : public GUObject {
 	Model		*castle = nullptr;
 	Model		*orb0 = nullptr;
 	Model		*orb1 = nullptr;
-	Model		*orb2 = nullptr;
+	Model		*knight = nullptr;
 	Model		*shark = nullptr;
 
 

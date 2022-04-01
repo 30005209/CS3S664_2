@@ -1,5 +1,0 @@
-﻿  Scene.cpp
-D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(215,57): warning C4305: 'argument': truncation from 'double' to 'float'
-D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(338,37): warning C4244: '-=': conversion from 'gu_seconds' to 'float', possible loss of data
-D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Source\Scene.cpp(360,71): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  DX11Proj.vcxproj -> D:\Uni\USW_Year_3\Real-Time Rendering Techniques p2\30005209\Debug\DX11Proj.exe
